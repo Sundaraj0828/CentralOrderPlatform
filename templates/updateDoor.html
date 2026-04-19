@@ -1,0 +1,2078 @@
+{% extends "index.html" %}
+{% set userNameCurrent=  user %}
+{% block title %}Update Door{% endblock %}
+{% block updateDoor %} 
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+
+<div class="container-fluid">
+<section id="section1" class="bg bg-lighta pb-4 mb-4">
+  <div class="row">
+    <div class="col-lg-12 text-left">
+      <a href="{{url_for('setBasicInformation', po_no = po_no)}}" class="btn btn-dark btn-sm float-left ml-3" ><i class="fa fa-arrow-left"></i> Go Back</a>
+    </div>
+  </div>
+<form id="addDoor" class="form-horizontal col-xs-12 col-lg-12 col-md-12 col-sm-12 mt-2 " method="POST" action="{{url_for('update_adddoors_records')}}" name="wform" >
+              {% for d in doors_info %}
+              <!-- Order Information -->
+              <fieldset  class="row sec1 mt-2">
+                   <legend  class="ml-3 bg bg-light mb-2">Door Specification & Pricing</legend>
+              </fieldset>
+              <fieldset class="row sec1 fset" id="doorSpec">
+                  <div class="form-group d-inline col-lg-2">
+                    <label for="Ponumber" class="">Po No</label>
+                    <input class="form-control mb-1" id="retailerPonum"  value="{{d['retailer_po_no']}}" name="retailerPonum" readonly="true">
+                  </div>
+                  <div class="form-group d-inline col-lg-2">
+                    <label for="doorSpecId" class="">Door Spec Id</label>
+                    <input class="form-control mb-1" id="doorSpecId"  value="{{d['door_spec_id']}}" name="doorSpecId" readonly="true">
+                  </div>
+              </fieldset>
+             
+
+
+
+              <fieldset class="row sec1 fset mb-4" id="doorType">                  
+                  <div class="form-group col-lg-4 col-sm-12"> 
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="resModelCheck" id="resModelCheck" onclick="myFunction()" value="Residential Model"{% if d['door_type']=='Residential Models' %} checked {% elif d['door_type']=='Commercial Models' %} disabled {% endif %}>
+                      <label class="form-check-label" for="resModelCheck">Residential Model</label>
+                    </div>
+                     <div class="form-check form-check-inline">
+                        <input type="checkbox" class="form-check-input" name="comModelCheck" id="comModelCheck" value="Commercial Model" onclick="myFunction()" {% if d['door_type']=='Commercial Models' %} checked {%elif d['door_type']=='Residential Models' %} disabled {% endif %}>
+                        <label class="form-check-label" for="comModelCheck">Commercial Model</label>
+                    </div>
+                  </div>
+                  
+                       
+
+                  <div class="form-group col-lg-4 col-sm-12" id="res_model" {% if d['door_type']=='Residential Models' %} style="display:block" {% elif d['door_type']=='Commercial Models'%} style="display:none" {% else %} style="display:none" {% endif %} >
+                        <select name="resDoorModel" id="resModel" class="custom-select mb-1" value="{{d['door_model']}}" >
+                            <option selected>Select Residential Model</option>
+                          <optgroup label="Steel Traditional">
+                              {% for st in steelTraditional %}
+                                <option value="{{st}}" {% if d['door_model'] == st %} selected {% endif %}>{{st}}</option>
+                              {% endfor %}
+                              
+                          </optgroup>
+
+                          <optgroup label="Steel Carriage House">
+                              {% for sch in steelCarriageHouse %}
+                                <option value="{{sch}}" {% if d['door_model'] == sch %} selected {% endif %}>{{sch}}</option>
+                              {% endfor %}
+                              
+                          </optgroup>
+
+                          <optgroup label="Specialty">speciality_models
+
+                              {% for sp in speciality_models %}
+                                <option value="{{sp}}" {% if d['door_model'] == sp %} selected {% endif %}>{{sp}}</option>
+                              {% endfor %}
+                          </optgroup>
+
+                       </select>
+                  </div>
+                  <div class="form-group col-lg-4 col-sm-12" id="com_model" {% if d['door_type']=='Commercial Models' %} style="display:block" {% elif d['door_type']=='Residential Models'%} style="display:none"{% else %} style="display:none" {% endif %}>
+                      <select name="comDoorModel" id="comModel" class="custom-select mb-1" value="{{d['door_model']}}">
+                          <option selected>Commercial Model</option>
+                          <optgroup label="Polyurethane Insulated">
+                            {% for pi in com_models[0] %}
+                              <option value="{{pi}}" {% if d['door_model'] == pi %} selected {% endif %}>{{pi}}</option>
+                            {% endfor %}
+                          </optgroup>
+                          <optgroup label="Polystyrene Insulated">
+                              {% for pi in com_models[1] %}
+                              <option value="{{pi}}" {% if d['door_model'] == pi %} selected {% endif %}>{{pi}}</option>
+                            {% endfor %}               
+                          </optgroup>
+
+                          <optgroup label="Ribbed Panel">
+                            {% for rp in com_models[2] %}
+                              <option value="{{rp}}" {% if d['door_model'] == rp %} selected {% endif %}>{{rp}}</option>
+                            {% endfor %}
+                          </optgroup>
+                          <optgroup label="Aluminum Fullview">
+                            {% for af in com_models[3] %}
+                              <option value="{{af}}" {% if d['door_model'] == af %} selected {% endif %}>{{af}}</option>
+                            {% endfor %}
+
+                          </optgroup>
+                          <optgroup label="Rolling Sheet - Commercial">
+                              {% for rsc in com_models[4] %}
+                              <option value="{{rsc}}" {% if d['door_model'] == rsc %} selected {% endif %}>{{rsc}}</option>
+                            {% endfor %}
+                          </optgroup>
+                          <optgroup label="Rolling Sheet - Self Storage">
+                              {% for rsc in com_models[5] %}
+                              <option value="{{rsc}}" {% if d['door_model'] == rsc %} selected {% endif %}>{{rsc}}</option>
+                            {% endfor %}
+                          </optgroup>
+
+                       </select>
+
+
+
+
+                  </div>
+              </fieldset>
+                      <!-- Door Size -->
+              <fieldset  class="row sec1">
+                  
+                  <div class="form-group col-lg-2 col-sm-12">
+                     <!--  <label for="number" class="">Weight</label> -->
+                      <input type="text" class="form-control mb-1" id="dsWidth" placeholder="Width"  name="dsWidth" value="{{d['door_width']}}"  data-toggle="tooltip" title="Enter Door Width" >
+                  </div>
+                  
+                  <div class="form-group col-lg-2 col-sm-12" id="dswidth">
+                    <!-- <label for="height" class="">Height</label> -->
+                    <input type="text" class="form-control mb-1" id="dsHeight" placeholder="Height"  name="dsHeight" value="{{d['door_height']}}"  data-toggle="tooltip" title="Enter Door Height">
+                  </div>  
+                  <div class="form-group col-lg-2 col-sm-12">
+                    <!-- <label for="Quantity" class="">Quantity</label> -->
+                      <input type="number" class="form-control mb-1" id="dsQuantity" placeholder="Quantity"  name="dsQuantity" value="{{d['door_quantity']}}" pattern="[1-9]\d*" min="1" title="Kindly input whole numbers only"  onchange="getQuantity()">
+                  </div> 
+                  <div class="form-group col-lg-3 col-sm-12">
+                      <input type="number" class="form-control mb-1" id="dsUPrice" placeholder="Unit Price"  name="dsUPrice" value="{{d['door_unit_price']}}" onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">                   
+                  </div> 
+                  
+                  <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="extprice" class="">Extented price</label> -->
+                    <input type="text" class="form-control mb-1" id="dsExtPrice" placeholder="Extented Price"  name="dsExtPrice" value="{{d['door_extended_price']}}" readonly>
+                 </div>
+                  </fieldset>
+                  <!-- Color -->
+                  <fieldset  class="row sec1">
+                 
+                      <div class="form-group col-lg-4 col-sm-12">
+                        <input type="text" class="form-control" id="color" placeholder="Color"  name="color" value="{{d['color']}}"  data-toggle="tooltip" title="Enter Color" >
+                      </div>
+                      <div class="form-group col-lg-2 col-sm-12">
+                      <input type="number" class="form-control mb-1" id="clrQty" placeholder="Quantity"  name="clrQty" value="{{d['door_quantity']}}" pattern="[1-9]\d*" min="1" title="Kindly input whole numbers only"  onchange="getQuantity()" readonly>
+                  </div>                    
+                      <div class="form-group col-lg-3 col-sm-12">
+                        <input type="number" class="form-control mb-1" id="clrUPrice" placeholder="Unit Price"  name="clrUPrice" value="{{d['color_unit_price']}}" onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01"  >
+                      </div>
+                       <div class="form-group col-lg-3 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="clrExtPrice" placeholder="Extended Price"  name="clrExtPrice" readonly value="{{d['color_ext_price']}}">
+                      </div>
+                </fieldset>
+                <!-- Stamp Design -->
+                <fieldset class="row sec1">              
+                  <div class="form-group col-lg-4 col-sm-12">
+                    <input type="text" class="form-control mb-1" id="stampDsgn" value="{{d['stamp_design']}}" placeholder="Stamp Design"  name="stampDsgn" data-toggle="tooltip" title="Enter Stamp Design">
+                  </div>
+                  <div class="form-group col-lg-2 col-sm-12">
+                      <input type="number" class="form-control mb-1" id="stampDesign_Qty" placeholder="Quantity"  name="stampDesign_Qty" value="{{d['stamp_design_qty']}}" pattern="[1-9]\d*" min="1" title="Kindly input whole numbers only"  onchange="getQuantity()" readonly>
+                  </div>                    
+                      <div class="form-group col-lg-3 col-sm-12">
+                        <input type="number" class="form-control mb-1" id="stampDesign_UPrice" placeholder="Unit Price"  name="stampDesign_UPrice" value="{{d['stamp_design_unit_price']}}" onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01"  >
+                      </div>
+                       <div class="form-group col-lg-3 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="stampDesign_ExtPrice" placeholder="Extended Price"  name="stampDesign_ExtPrice" readonly value="{{d['stamp_design_extended_price']}}">
+                      </div>
+                </fieldset>
+                <!-- Windload -->
+                  <fieldset  class="row sec1">
+                       <div class="form-group col-lg-4 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="windload" value="{{d['windload']}}" placeholder="Windload"  name="windload" data-toggle="tooltip" title="Enter W/L drawing #">
+                      </div>
+                      <div class="col-lg-8">&nbsp;</div>
+                </fieldset>
+
+
+
+
+                <!-- Back to top btn -->
+                <div class="back-to-top-wrapper" tabindex="-1">
+                  <a href="#top" class="back-to-top-link btn btn-outline-dark" aria-label="Scroll to Top" tabindex="-2"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+                  <a href="#bottom" class="back-to-top-link btn btn-outline-dark" aria-label="Scroll to Top"tabindex="-3"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+                </div>
+                  
+
+
+
+                 <!-- Spring Type -->
+                  <fieldset  class="row sec1 mb-1">
+                   <div class="form-group col-lg-4 col-sm-12">
+                    <select class="form-control text-secondary custom-select" id="springType" name="springType" value="{{d['spring_type']}}"  data-toggle="tooltip" title="Select Spring Type">
+                          <option value="" selected>Spring Type</option>
+                          {% for types in springType %}
+                            <option value="{{types}}" {% if d['spring_type'] == types %} selected {% endif %}>{{types}}</option>
+
+                          {% endfor %}
+                    </select>
+                  </div>
+                  
+
+                  <div class="form-group col-lg-2 col-sm-12">
+                      <input type="number" class="form-control mb-1" id="spring_type_Qty" placeholder="Quantity"  name="spring_type_Qty" value="{{d['stamp_design_qty']}}" pattern="[1-9]\d*" min="1" title="Kindly input whole numbers only"  onchange="getQuantity()" readonly>
+                  </div>                    
+                      <div class="form-group col-lg-3 col-sm-12">
+                        <input type="number" class="form-control mb-1" id="spring_type_UPrice" placeholder="Unit Price"  name="spring_type_UPrice" value="{{d['stamp_design_unit_price']}}" onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01"  >
+                      </div>
+                       <div class="form-group col-lg-3 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="spring_type_ExtPrice" placeholder="Extended Price"  name="spring_type_ExtPrice" readonly value="{{d['stamp_design_extended_price']}}">
+                      </div>
+                </fieldset>
+
+                 <!-- Additional Struts -->
+                  <fieldset  class="row sec1">
+                 
+                   <div class="form-group col-lg-4 col-sm-12">
+                    <input type="text" class="form-control mb-1" id="addStruts" placeholder="Additional Struts (Yes / No)" value="{{d['additional_struts']}}" name="addStruts" data-toggle="tooltip" title="Additional Struts (Enter Yes / No)">
+                  </div>
+                  <div class="form-group col-lg-2 col-sm-12">
+                    <!-- <label for="Quantity" class="">Quantity</label> -->
+                      <input type="number" class="form-control mb-1" id="addStrutsQty" placeholder="Quantity" value="{{d['additional_struts_quantity']}}" name="addStrutsQty" pattern="\d*"  data-toggle="tooltip" title="Please enter the number of extra struts requested per door">
+                  </div> 
+                  <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="unitprice" class="">Unit Price</label> -->
+                    <input type="number" class="form-control mb-1" id="addStrutsUPrice" placeholder="Unit Price"  name="addStrutsUPrice" value="{{d['additional_struts_unit_price']}}"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01"  pattern="[0-9]+([\.,][0-9]+)?" step="0.01">
+                  </div>
+                   <div class="form-group col-lg-3 col-sm-12">
+                   <!--  <label for="extendedprice" class="">Extented Price</label> -->
+                    <input type="text" class="form-control mb-1" id="addStrutsExtPrice" placeholder="Extended Price"  name="addStrutsExtPrice" value="{{d['additional_struts_extended_price']}}" readonly>
+                  </div>
+                </fieldset>  
+
+                <!-- Glass type -->
+                  <fieldset  class="row sec1">
+                  
+                   <div class="form-group col-lg-4 col-sm-12">
+                    <!-- <label for="glass" class="">Glass Type</label> -->
+                    <input type="text" class="form-control mb-1" id="glassType" placeholder="Glass Type (Specify Type)"  name="glassType" value="{{d['glass_type']}}" data-toggle="tooltip" title="Enter Glass Type">
+                  </div>
+                   <div class="form-group col-lg-2 col-sm-12">
+                      <input type="number" class="form-control mb-1" id="gtQuantity" placeholder="Quantity"  name="gtQuantity" value="{{d['glass_type_quantity']}}" pattern="\d*" title="Kindly input whole numbers only" >
+                  </div> 
+                   <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="unitprice" class="">Unit Price</label> -->
+                    <input type="number" class="form-control mb-1" id="glassUPrice" placeholder="Unit Price"  name="glassUPrice" value="{{d['glass_unit_price']}}"  onchange="setDecimal(this)" autocomplete="off" max="50000000" step="0.01">
+                  </div>
+                   <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="extendedprice" class="">Extented Price</label> -->
+                    <input type="text" class="form-control mb-1" value="{{d['glass_ext_price']}}" id="glassExtPrice" placeholder="Extended Price"  name="glassExtPrice" readonly>
+                  </div>
+                </fieldset>
+
+                  <!--Glass Comments-->
+                <fieldset  class="row sec1">
+                  <div class="form-group col-lg-12 col-sm-12">
+                    <!-- <label for="unitprice" class="">Glass Comments</label> -->
+                    <input type="text" class="form-control mb-1" id="glassComments" value="{{d['glass_comments']}}" placeholder="Glass Comments"  name="glassComments" data-toggle="tooltip" title="Enter Glass Comments">
+                  </div>
+                  
+                  <div class="form-group col-lg-12 col-sm-12">
+                    <input type="text" class="form-control mb-1" id="mosglzins" value="{{d['mosaic_glazing_instructions']}}" placeholder="Mosaic Glazing Instructions"  name="mosglzins" data-toggle="tooltip" title="Enter Mozaic Glazing Instructions">
+                  </div>
+                  
+                </fieldset>
+
+                <!-- Decra Trim -->
+                  <fieldset  class="row sec1">
+                    
+                   <div class="form-group col-lg-4 col-sm-12">
+                    <!-- <label for="DecraTrim" class="">Decra Trim</label> -->
+                    <input type="text" class="form-control mb-1" id="decaTrim" value="{{d['decra_trim']}}" placeholder="DecraTrim (Specify Type)"  name="decaTrim" data-toggle="tooltip" title="Enter DecraTrim Model">
+                  </div>
+                  <div class="form-group col-lg-2 col-sm-12">
+                      <input type="number" class="form-control mb-1" id="dtQuantity" placeholder="Quantity" value="{{d['decra_trim_quantity']}}" name="dtQuantity"  pattern="\d*" title="Kindly input whole numbers only"  >
+                  </div>
+                  <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="unitprice" class="">Unit Price</label> -->
+                    <input type="number" class="form-control mb-1" id="decaTrimUPrice" placeholder="Unit Price" value="{{d['decra_trim_unit_price']}}" name="decaTrimUPrice"   onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01" >
+                  </div>
+                   <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="extendedprice" class="">Extented Price</label> -->
+                    <input type="text" class="form-control mb-1" id="decaTrimExtPrice" placeholder="Extended Price" value="{{d['decra_trim_extended_price']}}" name="decaTrimExtPrice" readonly>
+                  </div>
+                </fieldset>
+                <!-- Track type-->
+                  <fieldset  class="row sec1">
+                    <legend class="ml-3">Track Details</legend>
+                   <div class="form-group col-lg-4 col-sm-12">
+                    
+                    <input type="text" class="form-control mb-1" id="trackType" placeholder="Track Type Application Details" value="{{d['track_type']}}" name="trackType"  data-toggle="tooltip" title="Enter Track Application details" >
+                 
+                  </div>
+                  <div class="form-group col-lg-2 col-sm-12">
+                    <!-- <label for="Quantity" class="">Quantity</label> -->
+                      <input type="number" class="form-control mb-1" id="trackTypeQty" placeholder="Quantity" value="{{d['track_type_quantity']}}"  name="trackTypeQty" pattern="\d*" title="Kindly input whole numbers only" readonly >
+                  </div> 
+                  <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="unitprice" class="">Unit Price</label> -->
+                    <input type="number" class="form-control mb-1" id="trackTypeUPrice" value="{{d['track_type_unit_price']}}" placeholder="Unit Price"  name="trackTypeUPrice"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                  </div>
+                   <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="extendedprice" class="">Extented Price</label> -->
+                    <input type="text" class="form-control mb-1" id="trackTypeExtPrice" value="{{d['track_type_extended_price']}}" placeholder="Extended Price"  name="trackTypeExtPrice" readonly>
+                  </div>
+                </fieldset>
+
+                   <!-- Horizontal radius-->
+                    <fieldset  class="row sec1">
+                   <div class="form-group col-lg-4 col-sm-12">
+                    <input type="text" class="form-control mb-1" id="hrRadius" placeholder="Horizontal Radius" value="{{d['horizontal_radius']}}" name="hrRadius" data-toggle="tooltip" title="Enter Track Radius (if applicable)">
+                  </div>
+                  <div class="col-lg-8">&nbsp;</div>
+                   <!-- Bracket Mount-->
+                   <div class="form-group col-lg-4 col-sm-12">
+                    <input type="text" class="form-control mb-1" id="bracketMount" placeholder=" Bracket Mount or Angle Mount"  name="bracketMount" value="{{d['bracket_mount']}}" data-toggle="tooltip" title="Enter Bracket Mount or Angle Mount">
+                  </div>
+                  <div class="col-lg-8">&nbsp;</div>
+                </fieldset>
+                 
+                  
+
+
+                  <!-- Decorative Handles -->
+                  <fieldset  class="row sec1">
+                  <legend class="ml-3">Decorative Hardware</legend>
+                   <div class="form-group col-lg-4 col-sm-12">
+                    <!-- <label for="DecraTrim" class="">Decorative Handles</label> -->
+                    <input type="text" class="form-control mb-1" id="decoHandles" placeholder="Other Decorative Hardware (Specify Type)"  name="decoHandles" value="{{d['blue_ridge_handles']}}" data-toggle="tooltip" title="Other Decorative Hardware (Specify Type)">
+                  </div>
+                  <div class="form-group col-lg-2 col-sm-12">
+                    <!-- <label for="Quantity" class="">Quantity</label> -->
+                      <input type="number" class="form-control mb-1" id="decoHndlQuantity" placeholder="Quantity" value="{{d['blue_ridge_handles_quantity']}}"  name="decoHndlQuantity"  pattern="\d*" title="Kindly input whole numbers only"  >
+                  </div> 
+                  <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="unitprice" class="">Unit Price</label> -->
+                    <input type="number" class="form-control mb-1" id="decoHndlUPrice" placeholder="Unit Price" value="{{d['blue_ridge_handles_unit_price']}}" name="decoHndlUPrice"   onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                  </div>
+                   <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="extendedprice" class="">Extented Price</label> -->
+                    <input type="text" class="form-control mb-1" id="decoHndlExtPrice" placeholder="Extended Price" value="{{d['blue_ridge_handles_extended_price']}}" name="decoHndlExtPrice" readonly>
+                  </div>
+                  <!-- Decorative Hinges -->
+                   <div class="form-group col-lg-4 col-sm-12">
+                    <!-- <label for="DecraTrim" class="">Decorative Hinges</label> -->
+                    <input type="text" class="form-control mb-1" id="decoHinges" placeholder="Other Decorative Hardware (Specify Type)" value="{{d['blue_ridge_hinges']}}" name="decoHinges" data-toggle="tooltip" title="Other Decorative Hardware (Specify Type)">
+                  </div>
+                  <div class="form-group col-lg-2 col-sm-12">
+                    <!-- <label for="Quantity" class="">Quantity</label> -->
+                      <input type="number" class="form-control mb-1" id="decoHngsQuantity" placeholder="Quantity" value="{{d['blue_ridge_hinges_quantity']}}"  name="decoHngsQuantity" pattern="\d*" title="Kindly input whole numbers only"  >
+                  </div> 
+                  <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="unitprice" class="">Unit Price</label> -->
+                    <input type="number" class="form-control mb-1" id="decoHngsUPrice" placeholder="Unit Price" value="{{d['blue_ridge_hinges_unit_price']}}" name="decoHngsUPrice"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                  </div>
+                   <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="extendedprice" class="">Extented Price</label> -->
+                    <input type="text" class="form-control mb-1" id="decoHngsExtPrice" placeholder="Extended Price" value="{{d['blue_ridge_hinges_extended_price']}}" name="decoHngsExtPrice" readonly>
+                  </div>
+                  <!-- Decorative Hardware -->
+                   <div class="form-group col-lg-4 col-sm-12">
+                    <!-- <label for="DecraTrim" class="">Decorative Hardware</label> -->
+                    <input type="text" class="form-control mb-1" id="otherHardware" placeholder="Other Decorative Hardware (Specify Type)" value="{{d['other_decorative_hardware']}}" name="otherHardware" data-toggle="tooltip" title="Enter other Decorative Hardware">
+                  </div>
+                  <div class="form-group col-lg-2 col-sm-12">
+                    <!-- <label for="Quantity" class="">Quantity</label> -->
+                      <input type="number" class="form-control mb-1" id="othHQuantity" placeholder="Quantity" value="{{d['other_hardware_quantity']}}" name="othHQuantity" pattern="\d*" title="Kindly input whole numbers only"  >
+                  </div> 
+                  <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="unitprice" class="">Unit Price</label> -->
+                    <input type="number" class="form-control mb-1" id="othHUPrice" placeholder="Unit Price" value="{{d['other_hardware_unit_price']}}" name="othHUPrice"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                  </div>
+                   <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="extendedprice" class="">Extented Price</label> -->
+                    <input type="text" class="form-control mb-1" id="othHExtPrice" placeholder="Extended Price" value="{{d['other_hardware_extended_price']}}"  name="othHExtPrice" readonly>
+                  </div>
+                </fieldset>
+             
+
+                  <!-- Vinyl T-Stop-->
+                  <fieldset  class="row sec1">
+                    <legend class="ml-3">Other Door Options</legend>
+                   <div class="form-group col-lg-4 col-sm-12">
+                    <!-- <label for="vinyltstop" class="">Vinyl T-Stop</label> -->
+                    <input type="text" class="form-control mb-1" id="vinTStop" placeholder="Vinyl T-Stop / Perimeter Seal - Width (Type size)" value="{{d['vinyl_t_stop']}}" name="vinTStop" data-toggle="tooltip" title="Enter Vinyl T-Stop (door width and color)">
+                  </div>
+                  <div class="form-group col-lg-2 col-sm-12">
+                    <!-- <label for="Quantity" class="">Quantity</label> -->
+                      <input type="number" value="{{d['vinyl_t_stop_quantity']}}" class="form-control mb-1" id="vinTStopQty" placeholder="Quantity"  name="vinTStopQty" pattern="\d*" title="Kindly input whole numbers only"  >
+                  </div> 
+                  <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="unitprice" class="">Unit Price</label> -->
+                    <input type="number" class="form-control mb-1" id="vinTStopUPrice" value="{{d['vinyl_t_stop_unit_price']}}" placeholder="Unit Price"  name="vinTStopUPrice"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                  </div>
+                   <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="extendedprice" class="">Extented Price</label> -->
+                    <input type="text" class="form-control mb-1" id="vinTStopExtPrice" placeholder="Extended Price" value="{{d['vinyl_t_stop_extended_price']}}" name="vinTStopExtPrice" readonly>
+                  </div>
+
+                   <div class="form-group col-lg-4 col-sm-12">
+                    <!-- <label for="vinyltstop" class="">Vinyl T-Stop</label> -->
+                    <input type="text" class="form-control mb-1" id="vinTStop_height" placeholder="Vinyl T-Stop / Perimeter Seal - Height (Type size)" value="{{d['vinyl_t_stop_height']}}" name="vinTStop_height" data-toggle="tooltip" title="Enter Vinyl T-Stop (door height and color)">
+                  </div>
+                  <div class="form-group col-lg-2 col-sm-12">
+                    <!-- <label for="Quantity" class="">Quantity</label> -->
+                      <input type="number" value="{{d['vinyl_t_stop_quantity_height']}}" class="form-control mb-1" id="vinTStopQty_height" placeholder="Quantity"  name="vinTStopQty_height" pattern="\d*" title="Kindly input whole numbers only"  >
+                  </div> 
+                  <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="unitprice" class="">Unit Price</label> -->
+                    <input type="number" class="form-control mb-1" id="vinTStopUPrice_height" value="{{d['vinyl_t_stop_unit_price_height']}}" placeholder="Unit Price"  name="vinTStopUPrice_height"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                  </div>
+                   <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="extendedprice" class="">Extented Price</label> -->
+                    <input type="text" class="form-control mb-1" id="vinTStopExtPrice_height" placeholder="Extended Price" value="{{d['vinyl_t_stop_extended_price_height']}}" name="vinTStopExtPrice_height" readonly>
+                  </div>
+                </fieldset>
+
+                  
+                 
+                  <!-- Lock Type -->
+                  <fieldset  class="row sec1">
+                  
+                   <div class="form-group col-lg-4 col-sm-12">
+                    <!-- <label for="locktype" class="">Lock Type</label> -->
+                    <input type="text" class="form-control mb-1" id="lockType" placeholder="Lock Type" value="{{d['lock_type']}}" name="lockType" data-toggle="tooltip" title="Enter Lock Type and details">
+                  </div>
+                  <div class="form-group col-lg-2 col-sm-12">
+                   <!--  <label for="Quantity" class="">Quantity</label> -->
+                      <input type="number" class="form-control mb-1" id="lockTypeQty" placeholder="Quantity" value="{{d['lock_type_quantity']}}" name="lockTypeQty" pattern="\d*" title="Kindly input whole numbers only"  >
+                  </div> 
+                  <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="unitprice" class="">Unit Price</label> -->
+                    <input type="number" value="{{d['lock_type_unit_price']}}" class="form-control mb-1" id="lockTypeUPrice" placeholder="Unit Price"  name="lockTypeUPrice"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                  </div>
+                   <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="extendedprice" class="">Extented Price</label> -->
+                    <input type="text" class="form-control mb-1" id="lockTypeExtPrice" value="{{d['lock_type_extended_price']}}" placeholder="Extended Price"  name="lockTypeExtPrice" readonly>
+                  </div>
+                </fieldset>
+
+                  <!-- Punched Angle -->
+                  <fieldset  class="row sec1">
+                 
+                   <div class="form-group col-lg-4 col-sm-12">
+                    <!-- <label for="punchedangle" class="">Punched Angle</label> -->
+                    <input type="text" class="form-control mb-1" id="punchedAngle" placeholder="Punched Angle (Yes/No)" value="{{d['punched_angle']}}" name="punchedAngle" data-toggle="tooltip" title="Enter Punched Angle length and gauge">
+                  </div>
+                  <div class="form-group col-lg-2 col-sm-12">
+                    <!-- <label for="Quantity" class="">Quantity</label> -->
+                      <input type="number" class="form-control mb-1" id="punchedAngleQty" placeholder="Quantity" value="{{d['punched_angle_quantity']}}" name="punchedAngleQty" pattern="\d*" title="Kindly input whole numbers only"  >
+                  </div> 
+                  <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="unitprice" class="">Unit Price</label> -->
+                    <input type="number" class="form-control mb-1" id="punchedAngleUPrice" value="{{d['punched_angle_unit_price']}}" placeholder="Unit Price"  name="punchedAngleUPrice"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                  </div>
+                   <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="extendedprice" class="">Extented Price</label> -->
+                    <input type="text" class="form-control mb-1" id="punchedAngleExtPrice" placeholder="Extended Price" value="{{d['punched_angle_extended_price']}}" name="punchedAngleExtPrice" readonly>
+                  </div>
+                </fieldset>
+
+               
+
+                 <!-- Winding Bars -->
+                  <fieldset  class="row sec1">
+                  
+                   <div class="form-group col-lg-4 col-sm-12">
+                    <select class="form-control text-secondary custom-select" id="windingBars" name="windingBars" value="{{d['winding_bars']}}" data-toggle="tooltip" title="Select Type of Winding Device">
+                          <option selected>Select Winding bars / Winding Devices</option>
+                          <option value="Winding Bars" {% if d['winding_bars']=='Winding Bars' %} selected="selected"{% endif %}>Winding Bars</option>
+                          <option value="Center Mount Torsion Winding Device" {% if d['winding_bars']=='Center Mount Torsion Winding Device' %} selected="selected"{% endif %}>Center Mount Torsion Winding Device</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-lg-2 col-sm-12">
+                    <!-- <label for="Quantity" class="">Quantity</label> -->
+                      <input type="number" class="form-control mb-1" id="winbarsQty" placeholder="Quantity" value="{{d['winding_bars_quantity']}}" name="winbarsQty" pattern="\d*" title="Kindly input whole numbers only"  >
+                  </div> 
+                  <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="unitprice" class="">Unit Price</label> -->
+                    <input type="number" class="form-control mb-1" value="{{d['winding_bars_unit_price']}}" id="winbarsuprice" placeholder="Unit Price"  name="winbarsuprice"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                  </div>
+                   <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="extendedprice" class="">Extented Price</label> -->
+                    <input type="text" class="form-control mb-1" id="winbarsextprice" value="{{d['winding_bars_extended_price']}}" placeholder="Extended Price"  name="winbarsextprice" readonly>
+                  </div>
+                </fieldset>
+
+                 <!-- Other Door Accessories -->
+                  <fieldset  class="row sec1">
+                 
+                   <div class="form-group col-lg-4 col-sm-12">
+                   <!--  <label for="othdooraccs" class="">Other Door Accessories</label> -->
+                    <input type="text" class="form-control mb-1" id="othDoorAccs" placeholder="Other Door Accessories (Specify)" value="{{d['other_door_accessories']}}"  name="othDoorAccs" data-toggle="tooltip" title="Enter other door accessories">
+                  </div>
+                  <div class="form-group col-lg-2 col-sm-12">
+                    <!-- <label for="Quantity" class="">Quantity</label> -->
+                      <input type="number" value="{{d['other_door_accessories_quantity']}}" class="form-control mb-1" id="othdooraccssquan" placeholder="Quantity"  name="othdooraccssquan" pattern="\d*" title="Kindly input whole numbers only"  >
+                  </div> 
+                  <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="unitprice" class="">Unit Price</label> -->
+                    <input type="number" class="form-control mb-1" value="{{d['other_door_accessories_unit_price']}}" id="othdooraccsuprice" placeholder="Unit Price"  name="othdooraccsuprice"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                  </div>
+                   <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="extendedprice" class="">Extented Price</label> -->
+                    <input type="text" class="form-control mb-1" id="othdooraccsextprice" value="{{d['other_door_accessories_extended_price']}}" placeholder="Extended Price"  name="othdooraccsextprice" readonly>
+                  </div>
+                </fieldset>
+
+                 <!-- Opener Model -->
+                  <fieldset  class="row sec1">
+                  
+                   <div class="form-group col-lg-4 col-sm-12">
+                    <!-- <label for="openermod" class="">Opener Model</label> -->
+                    <input type="text" class="form-control mb-1" id="openermod" placeholder="Opener Model (Specify)" value="{{d['opener_model']}}" name="openermod" data-toggle="tooltip" title="Enter Opener  Model# and details">
+                  </div>
+                  <div class="form-group col-lg-2 col-sm-12">
+                    <!-- <label for="Quantity" class="">Quantity</label> -->
+                      <input type="number" class="form-control mb-1" id="openermodquan" placeholder="Quantity" value="{{d['opener_model_quantity']}}" name="openermodquan" pattern="\d*" title="Kindly input whole numbers only"  >
+                  </div> 
+                  <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="unitprice" class="">Unit Price</label> -->
+                    <input type="number" class="form-control mb-1" value="{{d['opener_model_unit_price']}}" id="openermoduprice" placeholder="Unit Price"  name="openermoduprice"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                  </div>
+                   <div class="form-group col-lg-3 col-sm-12">
+                   <!--  <label for="extendedprice" class="">Extented Price</label> -->
+                    <input type="text" class="form-control mb-1" id="openermodextprice" placeholder="Extended Price" value="{{d['opener_model_extended_price']}}" name="openermodextprice" readonly>
+                  </div>
+                </fieldset>
+
+                 <!-- Opener Accessories -->
+                  <fieldset  class="row sec1">
+                  
+                   <div class="form-group col-lg-4 col-sm-12">
+                    <!-- <label for="openeracc" class="">Opener Accessories</label> -->
+                    <input type="text" class="form-control mb-1" id="openeracc" placeholder="Opener Accessories" value="{{d['opener_accessories']}}" name="openeracc" data-toggle="tooltip" title="Enter Opener Accessories">
+                  </div>
+                  <div class="form-group col-lg-2 col-sm-12">
+                  <!-- <label for="Quantity" class="">Quantity</label>
+                    -->                      
+                  <input type="number" class="form-control mb-1" id="openeraccquan" placeholder="Quantity" value="{{d['opener_accessories_quantity']}}" name="openeraccquan" pattern="\d*" title="Kindly input whole numbers only"  >
+                  </div> 
+                  <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="unitprice" class="">Unit Price</label> -->
+                    <input type="number" class="form-control mb-1" value="{{d['opener_accessories_unit_price']}}" id="openeraccuprice" placeholder="Unit Price"  name="openeraccuprice"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                  </div>
+                   <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="extendedprice" class="">Extented Price</label> -->
+                    <input type="text" class="form-control mb-1" id="openeraccextprice" value="{{d['opener_accessories_extended_price']}}" placeholder="Extended Price"  name="openeraccextprice" readonly>
+                  </div>
+                </fieldset>
+
+                 <!-- Operator Bracket -->
+                  <fieldset  class="row sec1">
+                   <div class="form-group col-lg-4 col-sm-12">
+                    <!-- <label for="opbracket" class="">Operator Bracket</label> -->
+                    <input type="text" class="form-control mb-1" value="{{d['operator_bracket']}}" id="opbracket" placeholder="Operator Bracket (Yes/No)"  name="opbracket" data-toggle="tooltip" title="Operator Bracket - enter Yes or No">
+                  </div>
+                  <div class="form-group col-lg-2 col-sm-12">
+                    <!-- <label for="Quantity" class="">Quantity</label> -->
+                      <input type="number" class="form-control mb-1" id="opbracketquan" value="{{d['operator_bracket_quantity']}}" placeholder="Quantity"  name="opbracketquan" pattern="\d*" title="Kindly input whole numbers only"  >
+                  </div> 
+                  <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="unitprice" class="">Unit Price</label> -->
+                    <input type="number" class="form-control mb-1" id="opbracketuprice" placeholder="Unit Price" value="{{d['operator_bracket_unit_price']}}"  name="opbracketuprice"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                  </div>
+                   <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="extendedprice" class="">Extented Price</label> -->
+                    <input type="text" class="form-control mb-1" id="opbracketextprice" value="{{d['operator_bracket_extended_price']}}" placeholder="Extended Price"  name="opbracketextprice" readonly>
+                  </div>
+                </fieldset>
+
+                <!-- Other Opener Accessories -->
+                  <fieldset  class="row sec1 fset">
+                 
+                   <div class="form-group col-lg-4 col-sm-12">
+                    <!-- <label for="otheroepnaccsr" class="">Other Opener Accessories</label> -->
+                    <input type="text" class="form-control mb-1" id="otheroepnaccsr" value="{{d['other_opener_accessories']}}" placeholder="Other Opener Accessories (Specify)"  name="otheroepnaccsr" data-toggle="tooltip" title="Type Other Opener Accessories">
+                  </div>
+                  <div class="form-group col-lg-2 col-sm-12">
+                    <!-- <label for="Quantity" class="">Quantity</label> -->
+                      <input type="number" class="form-control mb-1" id="otheroepnaccsrquan" placeholder="Quantity" value="{{d['other_opener_accessories_quantity']}}" name="otheroepnaccsrquan" pattern="\d*" title="Kindly input whole numbers only"  >
+                  </div> 
+                  <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="unitprice" class="">Unit Price</label> -->
+                    <input type="number" class="form-control mb-1" id="otheroepnaccsruprice" placeholder="Unit Price" value="{{d['other_opener_accessories_unit_price']}}" name="otheroepnaccsruprice"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                  </div>
+                   <div class="form-group col-lg-3 col-sm-12">
+                    <!-- <label for="extendedprice" class="">Extented Price</label> -->
+                    <input type="text" class="form-control mb-1" id="otheroepnaccsrextprice" value="{{d['other_opener_accessories_extended_price']}}" placeholder="Extended Price"  name="otheroepnaccsrextprice" readonly>
+                  </div>
+                </fieldset>
+
+
+                <fieldset class="row sec1 fset">
+                    <legend class="ml-3 ">Add Parts or Other Door Options</legend>
+                    <div class="form-group col-lg-4 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="additionalPart1" placeholder="Specify Parts or Other Door Options" value="{{d['additional_part1']}}" name="additionalPart1"   data-toggle="tooltip" title="Enter the parts description" >
+                    </div>
+                    <div class="form-group col-lg-2 col-sm-12">
+                        <input type="number" class="form-control mb-1" value="{{d['part1_qty']}}" id="partQty1" placeholder="Quantity"  name="partQty1" pattern="\d*" title="Kindly input whole numbers only"  >
+                    </div> 
+                    <div class="form-group col-lg-3 col-sm-12">
+                        <input type="number" class="form-control mb-1" id="partUPrice1" value="{{d['part1_u_price']}}" placeholder="Unit Price"  name="partUPrice1"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                    </div>
+                    <div class="form-group col-lg-3 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="partEPrice1" placeholder="Extended Price" value="{{d['part1_e_price']}}" name="partEPrice1" readonly>
+                    </div>
+
+
+                    <div class="form-group col-lg-4 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="additionalPart2" placeholder="Specify Parts or Other Door Options" value="{{d['additional_part2']}}" name="additionalPart2" data-toggle="tooltip" title="Enter the parts description" >
+                    </div>
+                    <div class="form-group col-lg-2 col-sm-12">
+                        <input type="number" class="form-control mb-1" id="partQty2" placeholder="Quantity" value="{{d['part2_qty']}}" name="partQty2" pattern="\d*" title="Kindly input whole numbers only"  >
+                    </div> 
+                    <div class="form-group col-lg-3 col-sm-12">
+                        <input type="number" class="form-control mb-1" id="partUPrice2" placeholder="Unit Price" value="{{d['part2_u_price']}}" name="partUPrice2"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                    </div>
+                    <div class="form-group col-lg-3 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="partEPrice2" placeholder="Extended Price" value="{{d['part2_e_price']}}" name="partEPrice2" readonly>
+                    </div>
+
+
+                    <div class="form-group col-lg-4 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="additionalPart3" placeholder="Specify Parts or Other Door Options" value="{{d['additional_part3']}}" name="additionalPart3"  data-toggle="tooltip" title="Enter the parts description" >
+                    </div>
+                    <div class="form-group col-lg-2 col-sm-12">
+                        <input type="number" class="form-control mb-1" id="partQty3" placeholder="Quantity" value="{{d['part3_qty']}}" name="partQty3" pattern="\d*" title="Kindly input whole numbers only"  >
+                    </div> 
+                    <div class="form-group col-lg-3 col-sm-12">
+                        <input type="number" class="form-control mb-1" id="partUPrice3" placeholder="Unit Price" value="{{d['part3_u_price']}}" name="partUPrice3"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                    </div>
+                    <div class="form-group col-lg-3 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="partEPrice3" placeholder="Extended Price" value="{{d['part3_e_price']}}" name="partEPrice3" readonly>
+                    </div>
+
+
+                    <div class="form-group col-lg-4 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="additionalPart4" placeholder="Specify Parts or Other Door Options" value="{{d['additional_part4']}}" name="additionalPart4"  data-toggle="tooltip" title="Enter the parts description" >
+                    </div>
+                    <div class="form-group col-lg-2 col-sm-12">
+                        <input type="number" class="form-control mb-1" id="partQty4" placeholder="Quantity" value="{{d['part4_qty']}}" name="partQty4" pattern="\d*" title="Kindly input whole numbers only"  >
+                    </div> 
+                    <div class="form-group col-lg-3 col-sm-12">
+                        <input type="number" class="form-control mb-1" id="partUPrice4" placeholder="Unit Price" value="{{d['part4_u_price']}}" name="partUPrice4"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                    </div>
+                    <div class="form-group col-lg-3 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="partEPrice4" placeholder="Extended Price" value="{{d['part4_e_price']}}" name="partEPrice4" readonly>
+                    </div>
+
+
+                    <div class="form-group col-lg-4 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="additionalPart5" placeholder="Specify Parts or Other Door Options" value="{{d['additional_part5']}}" name="additionalPart5"  data-toggle="tooltip" title="Enter the parts description" >
+                    </div>
+                    <div class="form-group col-lg-2 col-sm-12">
+                        <input type="number" class="form-control mb-1" id="partQty5" placeholder="Quantity" value="{{d['part5_qty']}}" name="partQty5" pattern="\d*" title="Kindly input whole numbers only"  >
+                    </div> 
+                    <div class="form-group col-lg-3 col-sm-12">
+                        <input type="number" class="form-control mb-1" id="partUPrice5" placeholder="Unit Price" value="{{d['part5_u_price']}}" name="partUPrice5"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                    </div>
+                    <div class="form-group col-lg-3 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="partEPrice5" placeholder="Extended Price" value="{{d['part5_e_price']}}" name="partEPrice5" readonly>
+                    </div>
+
+                </fieldset>
+
+                <!-- Labor Details -->
+                <fieldset class="row sec1 fset">
+                    <legend class="ml-3">Labor Rates</legend>
+
+                    <!-- Labor /Service 1 -->
+                    <div class="form-group col-lg-4 col-sm-12">
+                        <select name="labor1" id="labor1" class="custom-select mb-1" value="{{d['labor_service1']}}" data-toggle="tooltip" title="Enter the labor or deliver services to be performed" onchange="setLaborRate('laborUPrice', 'labor1')" >
+                          <option selected value="">Insert Labor/Service 1</option>
+                          <optgroup label="Labor/Services">
+                            {% for lr in laborIdDescriptors %}
+                              {% if laborRates %}
+                              <option value="{{lr}}-{{laborRates[0][lr]}}" {% if d['labor_service1'] == laborIdDescriptors[lr] %} selected {% endif %}>{{laborIdDescriptors[lr]}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </optgroup>
+                        </select>
+
+                    </div>
+                    <div class="form-group col-lg-2 col-sm-12">
+                        <input type="number" class="form-control mb-1" id="laborQty" placeholder="Quantity" value="{{d['labor_service1_quantity']}}" name="laborQty" pattern="\d*" title="Kindly input whole numbers only"  >
+                    </div> 
+                    <div class="form-group col-lg-3 col-sm-12">
+                        <input type="number" class="form-control mb-1" id="laborUPrice" placeholder="Unit Price" value="{{d['labor_service1_unit_price']}}" name="laborUPrice"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01" readonly>
+                    </div>
+                    <div class="form-group col-lg-3 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="laborEPrice" placeholder="Extended Price" value="{{d['labor_service1_extended_price']}}" name="laborEPrice" readonly>
+                    </div>
+
+                    <!-- Labor / Service 2 -->
+                     <div class="form-group col-lg-4 col-sm-12">
+                        <!-- <input type="text" class="form-control mb-1" id="labor2" placeholder="Insert Labor/Service 2" value="{{d['labor_service2']}}" name="labor2" data-toggle="tooltip"  title="Enter the labor or deliver services to be performed"> -->
+
+                        <select name="labor2" id="labor2" class="custom-select mb-1" value="{{d['labor_service2']}}" data-toggle="tooltip" title="Enter the labor or deliver services to be performed" onchange="setLaborRate('laborUPrice2', 'labor2')" >
+                          <option selected value="">Insert Labor/Service 2</option>
+                          <optgroup label="Labor/Services">
+                            {% for lr in laborIdDescriptors %}
+                              {% if laborRates %}
+                              <option value="{{lr}}-{{laborRates[0][lr]}}" {% if d['labor_service2'] == laborIdDescriptors[lr] %} selected {% endif %}>{{laborIdDescriptors[lr]}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </optgroup>
+                        </select>
+
+                      </div>
+                      <div class="form-group col-lg-2 col-sm-12">
+                          <input type="number" class="form-control mb-1" id="laborQty2" placeholder="Quantity" value="{{d['labor_service2_quantity']}}" name="laborQty2" pattern="\d*" title="Kindly input whole numbers only"  >
+                      </div> 
+                      <div class="form-group col-lg-3 col-sm-12">
+                          <input type="number" class="form-control mb-1" id="laborUPrice2" placeholder="Unit Price" value="{{d['labor_service2_unit_price']}}" name="laborUPrice2"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01" readonly>
+                      </div>
+                      <div class="form-group col-lg-3 col-sm-12">
+                          <input type="text" class="form-control mb-1" id="laborEPrice2" placeholder="Extended Price" value="{{d['labor_service2_extended_price']}}" name="laborEPrice2" readonly>
+                      </div>
+
+
+                      <!-- Labor / Service 3 -->
+                      <div class="form-group col-lg-4 col-sm-12">
+                        <!-- <input type="text" class="form-control mb-1" id="labor3" placeholder="Insert Labor/Service 3" value="{{d['labor_service3']}}" name="labor3" data-toggle="tooltip"  title="Enter the labor or deliver services to be performed"> -->
+
+                        <select name="labor3" id="labor3" class="custom-select mb-1" value="{{d['labor_service3']}}" data-toggle="tooltip" title="Enter the labor or deliver services to be performed" onchange="setLaborRate('laborUPrice3', 'labor3')" >
+                          <option selected value="">Insert Labor/Service 3</option>
+                          <optgroup label="Labor/Services">
+                            {% for lr in laborIdDescriptors %}
+                            {% if laborRates %}
+                              <option value="{{lr}}-{{laborRates[0][lr]}}" {% if d['labor_service3'] == laborIdDescriptors[lr] %} selected {% endif %}>{{laborIdDescriptors[lr]}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </optgroup>
+                        </select>
+                      </div>
+                      <div class="form-group col-lg-2 col-sm-12">
+                          <input type="number" class="form-control mb-1" id="laborQty3" placeholder="Quantity" value="{{d['labor_service3_quantity']}}" name="laborQty3" pattern="\d*" title="Kindly input whole numbers only"  >
+                      </div> 
+                      <div class="form-group col-lg-3 col-sm-12">
+                          <input type="number" class="form-control mb-1" id="laborUPrice3" placeholder="Unit Price" value="{{d['labor_service3_unit_price']}}" name="laborUPrice3"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01" readonly>
+                      </div>
+                      <div class="form-group col-lg-3 col-sm-12">
+                          <input type="text" class="form-control mb-1" id="laborEPrice3" placeholder="Extended Price" value="{{d['labor_service3_extended_price']}}" name="laborEPrice3" readonly>
+                      </div>
+
+
+                      <!-- Labor /Service 4 -->
+                    <div class="form-group col-lg-4 col-sm-12">
+                        <!-- <input type="text" class="form-control mb-1" id="labor4" placeholder="Insert Labor/Service 4" value="{{d['labor_service4']}}" name="labor4" data-toggle="tooltip"  title="Enter the labor or deliver services to be performed"> -->
+
+                        <select name="labor4" id="labor4" class="custom-select mb-1" value="{{d['labor_service4']}}" data-toggle="tooltip" title="Enter the labor or deliver services to be performed" onchange="setLaborRate('laborUPrice4', 'labor4')" >
+                          <option selected value="">Insert Labor/Service 4</option>
+                          <optgroup label="Labor/Services">
+                            {% for lr in laborIdDescriptors %}
+                            {% if laborRates %}
+                              <option value="{{lr}}-{{laborRates[0][lr]}}" {% if d['labor_service4'] == laborIdDescriptors[lr] %} selected {% endif %}>{{laborIdDescriptors[lr]}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </optgroup>
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-2 col-sm-12">
+                        <input type="number" class="form-control mb-1" id="laborQty4" placeholder="Quantity" value="{{d['labor_service4_quantity']}}" name="laborQty4" pattern="\d*" title="Kindly input whole numbers only"  >
+                    </div> 
+                    <div class="form-group col-lg-3 col-sm-12">
+                        <input type="number" class="form-control mb-1" id="laborUPrice4" placeholder="Unit Price" value="{{d['labor_service4_unit_price']}}" name="laborUPrice4"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01" readonly>
+                    </div>
+                    <div class="form-group col-lg-3 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="laborEPrice4" placeholder="Extended Price" value="{{d['labor_service4_extended_price']}}" name="laborEPrice4" readonly>
+                    </div>
+
+                    <!-- Labor / Service 5 -->
+                     <div class="form-group col-lg-4 col-sm-12">
+                       <!--  <input type="text" class="form-control mb-1" id="labor5" placeholder="Insert Labor/Service 5" value="{{d['labor_service5']}}"  name="labor5" data-toggle="tooltip"  title="Enter the labor or deliver services to be performed"> -->
+
+                        <select name="labor5" id="labor5" class="custom-select mb-1" value="{{d['labor_service5']}}" data-toggle="tooltip" title="Enter the labor or deliver services to be performed" onchange="setLaborRate('laborUPrice5', 'labor5')" >
+                          <option selected value="">Insert Labor/Service 5</option>
+                          <optgroup label="Labor/Services">
+                            {% for lr in laborIdDescriptors %}
+                            {% if laborRates %}
+                              <option value="{{lr}}-{{laborRates[0][lr]}}" {% if d['labor_service5'] == laborIdDescriptors[lr] %} selected {% endif %}>{{laborIdDescriptors[lr]}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </optgroup>
+                        </select>
+                      </div>
+                      <div class="form-group col-lg-2 col-sm-12">
+                          <input type="number" class="form-control mb-1" id="laborQty5" placeholder="Quantity" value="{{d['labor_service5_quantity']}}" name="laborQty5" pattern="\d*" title="Kindly input whole numbers only"  >
+                      </div> 
+                      <div class="form-group col-lg-3 col-sm-12">
+                          <input type="number" class="form-control mb-1" id="laborUPrice5" placeholder="Unit Price" value="{{d['labor_service5_extended_price']}}" name="laborUPrice5"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01" readonly>
+                      </div>
+                      <div class="form-group col-lg-3 col-sm-12">
+                          <input type="text" class="form-control mb-1" id="laborEPrice5" placeholder="Extended Price" value="{{d['labor_service5_extended_price']}}" name="laborEPrice5" readonly>
+                      </div>
+
+
+                      <!-- Labor / Service 6 -->
+                      <div class="form-group col-lg-4 col-sm-12">
+                        <!-- <input type="text" class="form-control mb-1" id="labor6" placeholder="Insert Labor/Service 6" value="{{d['labor_service6']}}"  name="labor6" data-toggle="tooltip"  title="Enter the labor or deliver services to be performed"> -->
+
+                        <select name="labor6" id="labor6" class="custom-select mb-1" value="{{d['labor_service6']}}" data-toggle="tooltip" title="Enter the labor or deliver services to be performed" onchange="setLaborRate('laborUPrice6', 'labor6')" >
+                          <option selected value="">Insert Labor/Service 6</option>
+                          <optgroup label="Labor/Services">
+                            {% for lr in laborIdDescriptors %}
+                            {% if laborRates %}
+                              <option value="{{lr}}-{{laborRates[0][lr]}}" {% if d['labor_service6'] == laborIdDescriptors[lr] %} selected {% endif %}>{{laborIdDescriptors[lr]}}</option>
+                            {% endif %}
+                            {% endfor %}
+                          </optgroup>
+                        </select>
+                      </div>
+                      <div class="form-group col-lg-2 col-sm-12">
+                          <input type="number" class="form-control mb-1" id="laborQty6" placeholder="Quantity" value="{{d['labor_service6_quantity']}}" name="laborQty6" pattern="\d*" title="Kindly input whole numbers only"  >
+                      </div> 
+                      <div class="form-group col-lg-3 col-sm-12">
+                          <input type="number" class="form-control mb-1" id="laborUPrice6" placeholder="Unit Price" value="{{d['labor_service6_unit_price']}}" name="laborUPrice6"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01" readonly>
+                      </div>
+                      <div class="form-group col-lg-3 col-sm-12">
+                          <input type="text" class="form-control mb-1" id="laborEPrice6" placeholder="Extended Price" value="{{d['labor_service6_extended_price']}}" name="laborEPrice6" readonly>
+                      </div>
+
+
+
+
+                      <!-- Labor / Service 7 -->
+                      <div class="form-group col-lg-4 col-sm-12">
+                        <!-- <input type="text" class="form-control mb-1" id="labor7" placeholder="Insert Labor/Service 7" value="{{d['labor_service7']}}"  name="labor7" data-toggle="tooltip"  title="Enter the labor or deliver services to be performed"> -->
+
+                         <select name="labor7" id="labor7" class="custom-select mb-1" value="{{d['labor_service7']}}" data-toggle="tooltip" title="Enter the labor or deliver services to be performed" onchange="setLaborRate('laborUPrice7', 'labor7')" >
+                          <option selected value="">Insert Labor/Service 6</option>
+                          <optgroup label="Labor/Services">
+                            {% for lr in laborIdDescriptors %}
+                            {% if laborRates %}
+                              <option value="{{lr}}-{{laborRates[0][lr]}}" {% if d['labor_service7'] == laborIdDescriptors[lr] %} selected {% endif %}>{{laborIdDescriptors[lr]}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </optgroup>
+                        </select>
+                      </div>
+                      <div class="form-group col-lg-2 col-sm-12">
+                          <input type="number" class="form-control mb-1" id="laborQty7" placeholder="Quantity" value="{{d['labor_service7_quantity']}}" name="laborQty7" pattern="\d*" title="Kindly input whole numbers only"  >
+                      </div> 
+                      <div class="form-group col-lg-3 col-sm-12">
+                          <input type="number" class="form-control mb-1" id="laborUPrice7" placeholder="Unit Price" value="{{d['labor_service7_unit_price']}}" name="laborUPrice7"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01" readonly>
+                      </div>
+                      <div class="form-group col-lg-3 col-sm-12">
+                          <input type="text" class="form-control mb-1" id="laborEPrice7" placeholder="Extended Price" value="{{d['labor_service7_extended_price']}}" name="laborEPrice7" readonly>
+                      </div>
+
+
+                      <!-- Labor /Service 8 -->
+                    <div class="form-group col-lg-4 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="labor8" placeholder="Insert Labor/Service 8" value="{{d['labor_service8']}}"  name="labor8" data-toggle="tooltip"  title="Enter the labor or deliver services to be performed">
+                    </div>
+                    <div class="form-group col-lg-2 col-sm-12">
+                        <input type="number" class="form-control mb-1" id="laborQty8" placeholder="Quantity" value="{{d['labor_service8_quantity']}}" name="laborQty8" pattern="\d*" title="Kindly input whole numbers only"  >
+                    </div> 
+                    <div class="form-group col-lg-3 col-sm-12">
+                        <input type="number" class="form-control mb-1" id="laborUPrice8" placeholder="Unit Price" value="{{d['labor_service8_unit_price']}}" name="laborUPrice8"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                    </div>
+                    <div class="form-group col-lg-3 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="laborEPrice8" placeholder="Extended Price" value="{{d['labor_service8_extended_price']}}" name="laborEPrice8" readonly>
+                    </div>
+
+                    <!-- Labor / Service 9 -->
+                     <div class="form-group col-lg-4 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="labor9" placeholder="Insert Labor/Service 9" value="{{d['labor_service9']}}"  name="labor9" data-toggle="tooltip"  title="Enter the labor or deliver services to be performed">
+                      </div>
+                      <div class="form-group col-lg-2 col-sm-12">
+                          <input type="number" class="form-control mb-1" id="laborQty9" placeholder="Quantity" value="{{d['labor_service9_quantity']}}" name="laborQty9" pattern="\d*" title="Kindly input whole numbers only"  >
+                      </div> 
+                      <div class="form-group col-lg-3 col-sm-12">
+                          <input type="number" class="form-control mb-1" id="laborUPrice9" placeholder="Unit Price" value="{{d['labor_service9_unit_price']}}" name="laborUPrice9"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                      </div>
+                      <div class="form-group col-lg-3 col-sm-12">
+                          <input type="text" class="form-control mb-1" id="laborEPrice9" placeholder="Extended Price" value="{{d['labor_service9_extended_price']}}" name="laborEPrice9" readonly>
+                      </div>
+
+
+                      <!-- Labor / Service 10 -->
+                      <div class="form-group col-lg-4 col-sm-12">
+                        <input type="text" class="form-control mb-1" id="labor10" placeholder="Insert Labor/Service 10" value="{{d['labor_service10']}}"  name="labor10" data-toggle="tooltip"  title="Enter the labor or deliver services to be performed">
+                      </div>
+                      <div class="form-group col-lg-2 col-sm-12">
+                          <input type="number" class="form-control mb-1" id="laborQty10" placeholder="Quantity" value="{{d['labor_service10_quantity']}}" name="laborQty10" pattern="\d*" title="Kindly input whole numbers only"  >
+                      </div> 
+                      <div class="form-group col-lg-3 col-sm-12">
+                          <input type="number" class="form-control mb-1" id="laborUPrice10" placeholder="Unit Price" value="{{d['labor_service10_unit_price']}}" name="laborUPrice10"  onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                      </div>
+                      <div class="form-group col-lg-3 col-sm-12">
+                          <input type="number" class="form-control mb-1" id="laborEPrice10" placeholder="Extended Price" value="{{d['labor_service10_extended_price']}}" name="laborEPrice10" readonly>
+                      </div>
+                </fieldset>
+
+                <!-- Shipping Cost -->
+                <fieldset  class="row sec1 mt-2 mb-2 fset" id="reqst"> 
+                  <div class="col-lg-7 text-muted">
+                      <div class="row">
+                        <div class="col-lg-12 mb-3">
+                        <h6>Cancellation Policy:  Refunds not provided in full after 24 hour period due to highly customized production.</h6>
+                        </div>
+                        <div class="col-lg-10 mb-3 mt-3">
+                                  <h6>I would like to request custom shop drawings for a Fullview door prior to submitting this order. Shop drawing requests from Engineering can take up to 1 week.</h6>
+                        </div>
+                        <div class="form-group col-lg-2 col-sm-12 pt-3">
+                            <select class="form-control text-secondary " id="requestDrawing" name="requestDrawing" value="{{d['request_drawing']}}" data-toggle="tooltip">
+                                <option selected value="No" {% if d['request_drawing']=='No' %} selected="selected"{% endif %}>No</option>
+                                <option value="Yes"{% if d['request_drawing']=='Yes' %} selected="selected"{% endif %}>Yes</option>
+                            </select>
+                        </div>
+                      </div>
+                      
+                  </div>
+                  <div class="col-lg-5 ">
+                    <div class="row">
+                      <div class="col-lg-5 text-right "><strong>Sub-Total Material $</strong></div>
+                      <div class="form-group col-lg-7 col-sm-12 text-right">
+                       <!--  <label for="shipcost" class="">Shipping Cost</label> -->
+                        <input type="text" class="form-control mb-1" id="st_MatCost" placeholder=""  name="st_MatCost" value="{{d['sub_total_material_cost']}}" readonly>
+                      </div>
+
+                      <div class="col-lg-5 text-right"><strong>Sub-Total Labor $</strong></div>
+                      <div class="form-group col-lg-7 col-sm-12 text-right">
+                       <!--  <label for="shipcost" class="">Shipping Cost</label> -->
+                        <input type="text" class="form-control mb-1" id="st_LabrCost" placeholder=""  name="st_LabrCost" value="{{d['sub_total_labor_cost']}}" readonly>
+                      </div>
+
+                      <div class="col-lg-5 text-right"><strong>Shipping $</strong></div>
+                      <div class="form-group col-lg-7 col-sm-12 text-right">
+                       <!--  <label for="shipcost" class="">Shipping Cost</label> -->
+                        <input type="text" class="form-control  mb-1" id="shipCost" placeholder=""  name="shipCost" value="{{d['shipping_cost']}}" onchange="setDecimal(this)" autocomplete="off"  max="50000000" step="0.01">
+                      </div>
+                      <!-- Total -->  
+                
+                      <div class="col-lg-5 text-right"><strong>Total $</strong></div>
+                       <div class="form-group col-lg-7 col-sm-12">
+                          <!-- <label for="total" class="">Total</label> -->
+                          <input type="text" class="form-control mb-1" id="total" placeholder=""  name="total"  value="{{d['total']}}" readonly>
+                        </div> 
+                      </div>
+
+                  </div>
+                  
+                                                    
+                </fieldset>
+                
+                <div class="form-group col-lg-12 text-center m-4">
+                <button type="Submit" class="btn btn-primary">Add to Cart</button>
+              </div>
+              {% break %}
+              {% endfor %}
+              </form>
+            </section>
+</div>
+
+
+
+
+
+<script >
+  function setLaborRate(labor_unit_price_id, labor_dropdown_id){
+    var dropdownVal = $('#'+labor_dropdown_id).find(":selected").val();
+    var res = dropdownVal.split("-");
+    $('#'+labor_unit_price_id).val(res[1]);
+    $('#'+labor_unit_price_id).focus();
+  }
+</script>
+<script>
+function getQuantity() {
+  var mylist1 = document.getElementById("dsQuantity").value;
+  document.getElementById("trackTypeQty").value = mylist1;
+  document.getElementById("clrQty").value = mylist1;
+  document.getElementById("stampDesign_Qty").value = mylist1;
+  document.getElementById("spring_type_Qty").value = mylist1;
+}
+</script>
+
+
+<script>
+  function setDecimal(input) {
+      input.value = isNaN(parseFloat(input.value).toFixed(2))? (parseFloat(0.0).toFixed(2)) :parseFloat(input.value).toFixed(2);
+  }  
+</script>
+<!-- model Type selector -->
+
+<script>
+function myFunction() {
+  var checkBox1 = document.getElementById("resModelCheck");
+  var checkBox2 = document.getElementById("comModelCheck");
+  var res = document.getElementById("res_model");
+  var com = document.getElementById("com_model");
+  if (checkBox1.checked == true){
+    res.style.display = "block";
+    checkBox2.disabled = true;
+  } else {
+     checkBox2.disabled = false;
+     res.style.display = "none";
+  }
+   if (checkBox2.checked == true){
+    com.style.display = "block";
+    checkBox1.disabled = true;
+  } else {
+     checkBox1.disabled = false;
+     com.style.display = "none";
+  }
+}
+</script>
+
+
+<!-- Calculation -->
+
+<!-- Calculation -->
+<script type="text/javascript">
+$(document).ready(function(){
+    //Door
+    var qty= $("#dsQuantity");
+    var dsUPrice = $("#dsUPrice");
+    var dsExtPrice = $('#dsExtPrice');
+    var total= 0;
+    var qty_val = 0;
+    var dsUPrice_val = 0;
+    qty.on("input ",function(){
+        if (dsUPrice && dsUPrice.val()) {
+          dsUPrice_val = dsUPrice.val();
+        }
+        qty_val = qty.val();
+        dsUPrice_val = dsUPrice.val();
+        total=rowTotal(qty_val, dsUPrice_val);
+        dsExtPrice.val(total.toFixed(2)); 
+        grandtotal();       
+    });  
+    dsUPrice.keyup(function(){
+        if (qty && qty.val()) {
+          qty_val = qty.val();
+        }
+        dsUPrice_val = dsUPrice.val();
+        total=rowTotal(qty_val, dsUPrice_val);
+        dsExtPrice.val(total.toFixed(2));   
+        grandtotal();     
+    }); 
+
+
+    //Color
+    var qty2= $("#clrQty");
+    var dsUPrice2 = $("#clrUPrice");
+    var dsExtPrice2 = $('#clrExtPrice');
+    var total2= 0;
+    var qty_val2 = 0;
+    var dsUPrice_val2 = 0;
+    qty2.on("input ",function(){
+        if (dsUPrice2 && dsUPrice2.val()) {
+          dsUPrice_val2 = dsUPrice2.val();
+        }
+        qty_val2 = qty2.val();
+        dsUPrice_val2 = dsUPrice2.val();
+        total2=rowTotal(qty_val2, dsUPrice_val2); 
+        dsExtPrice2.val(total2.toFixed(2));  
+        grandtotal();      
+    });  
+    dsUPrice2.keyup(function(){
+        if (qty2 && qty2.val()) {
+          qty_val2 = qty2.val();
+        }
+        dsUPrice_val2 = dsUPrice2.val();
+        total2=rowTotal(qty_val2, dsUPrice_val2); 
+        dsExtPrice2.val(total2.toFixed(2)); 
+        grandtotal();       
+    }); 
+
+    //Stamp Design
+    var qty_stamp= $("#stampDesign_Qty");
+    var dsUPrice_stamp = $("#stampDesign_UPrice");
+    var dsExtPrice_stamp = $('#stampDesign_ExtPrice');
+    var total_stamp= 0;
+    var qty_val_stamp = 0;
+    var dsUPrice_val_stamp = 0;
+    qty_stamp.on("input ",function(){
+        if (dsUPrice_stamp && dsUPrice_stamp.val()) {
+          dsUPrice_val_stamp = dsUPrice_stamp.val();
+        }
+        qty_val_stamp = qty_stamp.val();
+        dsUPrice_val_stamp = dsUPrice_stamp.val();
+        total_stamp=rowTotal(qty_val_stamp, dsUPrice_val_stamp); 
+        dsExtPrice_stamp.val(total_stamp.toFixed(2));  
+        grandtotal();      
+    });  
+    dsUPrice_stamp.keyup(function(){
+        if (qty_stamp && qty_stamp.val()) {
+          qty_val_stamp = qty_stamp.val();
+        }
+        dsUPrice_val_stamp = dsUPrice_stamp.val();
+        total_stamp=rowTotal(qty_val_stamp, dsUPrice_val_stamp); 
+        dsExtPrice_stamp.val(total_stamp.toFixed(2)); 
+        grandtotal();       
+    }); 
+
+
+     //Spring Type ------------------------------------------------------------
+    var qty_spring= $("#spring_type_Qty");
+    var uPrice_spring = $("#spring_type_UPrice");
+    var extPrice_spring = $('#spring_type_ExtPrice');
+    var total_spring= 0;
+    var qty_val_spring = 0;
+    var uPrice_val_spring = 0;
+    qty_spring.on("input ",function(){
+        if (uPrice_spring && uPrice_spring.val()) {
+          uPrice_val_spring = uPrice_spring.val();
+        }
+        qty_val_spring = qty_spring.val();
+        uPrice_val_spring = uPrice_spring.val();
+        total_spring=rowTotal(qty_val_spring, uPrice_val_spring); 
+        extPrice_spring.val(total_spring.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice_spring.keyup(function(){
+        if (qty_spring && qty_spring.val()) {
+          qty_val_spring = qty_spring.val();
+        }
+        uPrice_val_spring = uPrice_spring.val();
+        total_spring=rowTotal(qty_val_spring, uPrice_val_spring); 
+        extPrice_spring.val(total_spring.toFixed(2)); 
+        grandtotal();       
+    }); 
+
+
+    //Additional Struts
+    var qty3= $("#addStrutsQty");
+    var uPrice3 = $("#addStrutsUPrice");
+    var extPrice3 = $('#addStrutsExtPrice');
+    var total3= 0;
+    var qty_val3 = 0;
+    var uPrice_val3 = 0;
+    qty3.on("input ",function(){
+        if (uPrice3 && uPrice3.val()) {
+          uPrice_val3 = uPrice3.val();
+        }
+        qty_val3 = qty3.val();
+        total3=rowTotal(qty_val3, uPrice_val3); 
+        extPrice3.val(total3.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice3.keyup(function(){
+        if (qty3 && qty3.val()) {
+          qty_val3 = qty3.val();
+        }      
+        uPrice_val3 = uPrice3.val();
+        total3=rowTotal(qty_val3, uPrice_val3); 
+        extPrice3.val(total3.toFixed(2)); 
+        grandtotal();       
+    });
+    
+
+    //Glass Type
+    var qty4= $("#gtQuantity");
+    var uPrice4 = $("#glassUPrice");
+    var extPrice4 = $('#glassExtPrice');
+    var total4= 0;
+    var qty_val4 = 0;
+    var uPrice_val4 = 0;
+    qty4.on("input ",function(){
+        if (uPrice4 && uPrice4.val()) {
+          uPrice_val4 = uPrice4.val();
+        }
+        qty_val4 = qty4.val();
+        total4=rowTotal(qty_val4, uPrice_val4); 
+        extPrice4.val(total4.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice4.keyup(function(){
+        if (qty4 && qty4.val()) {
+          qty_val4 = qty4.val();
+        }
+        uPrice_val4 = uPrice4.val();
+        total4=rowTotal(qty_val4, uPrice_val4); 
+        extPrice4.val(total4.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //Decra Trim
+    var dtQuantity= $("#dtQuantity");
+    var decaTrimUPrice = $("#decaTrimUPrice");
+    var decaTrimExtPrice = $('#decaTrimExtPrice');
+    var total5= 0;
+    var qty_val5 = 0;
+    var uPrice_val5 = 0;
+    dtQuantity.on("input ",function(){
+        if (decaTrimUPrice && decaTrimUPrice.val()) {
+          uPrice_val5 = decaTrimUPrice.val();
+        }
+        qty_val5 = dtQuantity.val();
+        total5=rowTotal(qty_val5, uPrice_val5); 
+        decaTrimExtPrice.val(total5.toFixed(2));  
+        grandtotal();      
+    });  
+    decaTrimUPrice.keyup(function(){
+        if (dtQuantity && dtQuantity.val()) {
+          qty_val5 = dtQuantity.val();
+        }
+        uPrice_val5 = decaTrimUPrice.val();
+        total5=rowTotal(qty_val5, uPrice_val5); 
+        decaTrimExtPrice.val(total5.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //Track Type
+    var qty6= $("#dsQuantity");
+    var uPrice6 = $("#trackTypeUPrice");
+    var extPrice6 = $('#trackTypeExtPrice');
+    var total6= 0;
+    var qty_val6 = 0;
+    var uPrice_val6 = 0;
+    qty6.on("input ",function(){
+        if (uPrice6 && uPrice6.val()) {
+          uPrice_val6 = uPrice6.val();
+        }
+        qty_val6 = qty6.val();
+        total6=rowTotal(qty_val6, uPrice_val6); 
+        extPrice6.val(total6.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice6.keyup(function(){
+        if (qty6 && qty6.val()) {
+          qty_val6 = qty6.val();
+        }
+        uPrice_val6 = uPrice6.val();
+        total6=rowTotal(qty_val6, uPrice_val6); 
+        extPrice6.val(total6.toFixed(2)); 
+        grandtotal();       
+    });
+
+
+    //Decorative Hardware - Blue Ridge Handles
+    var qty7= $("#decoHndlQuantity");
+    var uPrice7 = $("#decoHndlUPrice");
+    var extPrice7 = $('#decoHndlExtPrice');
+    var total7= 0;
+    var qty_val7 = 0;
+    var uPrice_val7 = 0;
+    qty7.on("input ",function(){
+        if (uPrice7 && uPrice7.val()) {
+          uPrice_val7 = uPrice7.val();
+        }
+        qty_val7 = qty7.val();
+        total7=rowTotal(qty_val7, uPrice_val7); 
+        extPrice7.val(total7.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice7.keyup(function(){
+        if (qty7 && qty7.val()) {
+          qty_val7 = qty7.val();
+        }
+        uPrice_val7 = uPrice7.val();
+        total7=rowTotal(qty_val7, uPrice_val7); 
+        extPrice7.val(total7.toFixed(2)); 
+        grandtotal();       
+    });
+
+    /*function checkInputHasValue(selector_html){
+        if (selector_html && selector_html.val()) {
+          qty_val7 = selector_html.val();
+        }
+    }*/
+
+    //Decorative Hardware - Blue Ridge Hinges
+    var qty8= $("#decoHngsQuantity");
+    var uPrice8 = $("#decoHngsUPrice");
+    var extPrice8 = $('#decoHngsExtPrice');
+    var total8= 0;
+    var qty_val8 = 0;
+    var uPrice_val8 = 0;
+    qty8.on("input ",function(){
+        if (uPrice8 && uPrice8.val()) {
+          uPrice_val8 = uPrice8.val();
+        }
+        qty_val8 = qty8.val();
+        total8=rowTotal(qty_val8, uPrice_val8); 
+        extPrice8.val(total8.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice8.keyup(function(){
+        if (qty8 && qty8.val()) {
+          qty_val8 = qty8.val();
+        }
+        uPrice_val8 = uPrice8.val();
+        total8=rowTotal(qty_val8, uPrice_val8); 
+        extPrice8.val(total8.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //other Decorative Hardware
+    var qty9= $("#vinTStopQty");
+    var uPrice9 = $("#vinTStopUPrice");
+    var extPrice9 = $('#vinTStopExtPrice');
+    var total9= 0;
+    var qty_val9 = 0;
+    var uPrice_val9 = 0;
+    qty9.on("input ",function(){
+        if (uPrice9 && uPrice9.val()) {
+          uPrice_val9 = uPrice9.val();
+        }
+        qty_val9 = qty9.val();
+        total9=rowTotal(qty_val9, uPrice_val9); 
+        extPrice9.val(total9.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice9.keyup(function(){
+        if (qty9 && qty9.val()) {
+          qty_val9 = qty9.val();
+        }
+        uPrice_val9 = uPrice9.val();
+        total9=rowTotal(qty_val9, uPrice_val9); 
+        extPrice9.val(total9.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //vinyle T stop height
+    var qty9_h= $("#vinTStopQty_height");
+    var uPrice9_h = $("#vinTStopUPrice_height");
+    var extPrice9_h = $('#vinTStopExtPrice_height');
+    var total9_h= 0;
+    var qty_val9_h = 0;
+    var uPrice_val9_h = 0;
+    qty9.on("input ",function(){
+        if (uPrice9_h && uPrice9_h.val()) {
+          uPrice_val9_h = uPrice9_h.val();
+        }
+        qty_val9_h = qty9_h.val();
+        total9_h=rowTotal(qty_val9_h, uPrice_val9_h); 
+        extPrice9_h.val(total9_h.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice9_h.keyup(function(){
+        if (qty9_h && qty9_h.val()) {
+          qty_val9_h = qty9_h.val();
+        }
+        uPrice_val9_h = uPrice9_h.val();
+        total9_h=rowTotal(qty_val9_h, uPrice_val9_h); 
+        extPrice9_h.val(total9_h.toFixed(2)); 
+        grandtotal();       
+    });
+
+
+    //Lock Type
+    var qty10= $("#lockTypeQty");
+    var uPrice10 = $("#lockTypeUPrice");
+    var extPrice10 = $('#lockTypeExtPrice');
+    var total10= 0;
+    var qty_val10 = 0;
+    var uPrice_val10 = 0;
+    qty10.on("input ",function(){
+        if (uPrice10 && uPrice10.val()) {
+          uPrice_val10 = uPrice10.val();
+        }
+        qty_val10 = qty10.val();
+        total10=rowTotal(qty_val10, uPrice_val10); 
+        extPrice10.val(total10.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice10.keyup(function(){
+        if (qty10 && qty10.val()) {
+          qty_val10 = qty10.val();
+        }
+        uPrice_val10 = uPrice10.val();
+        total10=rowTotal(qty_val10, uPrice_val10); 
+        extPrice10.val(total10.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //Other Decorative Hardware
+    var qty11= $("#othHQuantity");
+    var uPrice11 = $("#othHUPrice");
+    var extPrice11 = $('#othHExtPrice');
+    var total11= 0;
+    var qty_val11 = 0;
+    var uPrice_val11 = 0;
+    qty11.on("input ",function(){
+        if (uPrice11 && uPrice11.val()) {
+          uPrice_val11 = uPrice11.val();
+        }
+        qty_val11 = qty11 .val();
+        total11=rowTotal(qty_val11, uPrice_val11); 
+        extPrice11.val(total11.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice11.keyup(function(){
+        if (qty11 && qty11.val()) {
+          qty_val11 = qty11.val();
+        }
+        uPrice_val11 = uPrice11.val();
+        total11=rowTotal(qty_val11, uPrice_val11); 
+        extPrice11.val(total11.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //Punched Angle
+    var qty12= $("#punchedAngleQty");
+    var uPrice12 = $("#punchedAngleUPrice");
+    var extPrice12 = $('#punchedAngleExtPrice');
+    var total12= 0;
+    var qty_val12 = 0;
+    var uPrice_val12 = 0;
+    qty12.on("input ",function(){
+        if (uPrice12 && uPrice12.val()) {
+          uPrice_val12 = uPrice12.val();
+        }
+        qty_val12 = qty12.val();
+        total12=rowTotal(qty_val12, uPrice_val12); 
+        extPrice12.val(total12.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice12.keyup(function(){
+        if (qty12 && qty12.val()) {
+          qty_val12 = qty12.val();
+        }
+        uPrice_val12 = uPrice12.val();
+        total12=rowTotal(qty_val12, uPrice_val12); 
+        extPrice12.val(total12.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //Winding bars / Devices
+    var qty13= $("#winbarsQty");
+    var uPrice13 = $("#winbarsuprice");
+    var extPrice13 = $('#winbarsextprice');
+    var total13= 0;
+    var qty_val13 = 0;
+    var uPrice_val13 = 0;
+    qty13.on("input ",function(){
+        if (uPrice13 && uPrice13.val()) {
+          uPrice_val13 = uPrice13.val();
+        }
+        qty_val13 = qty13.val();
+        total13=rowTotal(qty_val13, uPrice_val13); 
+        extPrice13.val(total13.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice13.keyup(function(){
+        if (qty13 && qty13.val()) {
+          qty_val13 = qty13.val();
+        }
+        uPrice_val13 = uPrice13.val();
+        total13=rowTotal(qty_val13, uPrice_val13); 
+        extPrice13.val(total13.toFixed(2)); 
+        grandtotal();       
+    });
+
+
+    //Other Door Accessories
+    var qty14= $("#othdooraccssquan");
+    var uPrice14 = $("#othdooraccsuprice");
+    var extPrice14 = $('#othdooraccsextprice');
+    var total14= 0;
+    var qty_val14 = 0;
+    var uPrice_val14 = 0;
+    qty14.on("input ",function(){
+        if (uPrice14 && uPrice14.val()) {
+          uPrice_val14 = uPrice14.val();
+        }
+        qty_val14 = qty14.val();
+        total14=rowTotal(qty_val14, uPrice_val15); 
+        extPrice14.val(total14.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice14.keyup(function(){
+        if (qty14 && qty14.val()) {
+          qty_val14 = qty14.val();
+        }
+        uPrice_val14 = uPrice14.val();
+        total14=rowTotal(qty_val14, uPrice_val14); 
+        extPrice14.val(total14.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //Opener Model
+    var qty15= $("#openermodquan");
+    var uPrice15 = $("#openermoduprice");
+    var extPrice15 = $('#openermodextprice');
+    var total15= 0;
+    var qty_val15 = 0;
+    var uPrice_val15 = 0;
+    qty15.on("input ",function(){
+        if (uPrice15 && uPrice15.val()) {
+          uPrice_val15 = uPrice15.val();
+        }
+        qty_val15 = qty15.val();
+        total15=rowTotal(qty_val15, uPrice_val15); 
+        extPrice15.val(total15.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice15.keyup(function(){
+        if (qty15 && qty15.val()) {
+          qty_val15 = qty15.val();
+        }
+        uPrice_val15 = uPrice15.val();
+        total15=rowTotal(qty_val15, uPrice_val15); 
+        extPrice15.val(total15.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //Opener Accessories
+    var qty16= $("#openeraccquan");
+    var uPrice16 = $("#openeraccuprice");
+    var extPrice16 = $('#openeraccextprice');
+    var total16= 0;
+    var qty_val16 = 0;
+    var uPrice_val16 = 0;
+    qty16.on("input ",function(){
+        if (uPrice16 && uPrice16.val()) {
+          uPrice_val16 = uPrice16.val();
+        }
+        qty_val16 = qty16.val();
+        total16=rowTotal(qty_val16, uPrice_val16); 
+        extPrice16.val(total16.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice16.keyup(function(){
+        if (qty16 && qty16.val()) {
+          qty_val16 = qty16.val();
+        }
+        uPrice_val16 = uPrice16.val();
+        total16=rowTotal(qty_val16, uPrice_val16); 
+        extPrice16.val(total16.toFixed(2)); 
+        grandtotal();       
+    });
+
+
+    //Operator Bracket
+    var qty17= $("#opbracketquan");
+    var uPrice17 = $("#opbracketuprice");
+    var extPrice17 = $('#opbracketextprice');
+    var total17= 0;
+    var qty_val17 = 0;
+    var uPrice_val17 = 0;
+    qty17.on("input ",function(){
+        if (uPrice17 && uPrice17.val()) {
+          uPrice_val17 = uPrice17.val();
+        }
+        qty_val17 = qty17.val();
+        total17=rowTotal(qty_val17, uPrice_val17); 
+        extPrice17.val(total17.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice17.keyup(function(){
+        if (qty17 && qty17.val()) {
+          qty_val17 = qty17.val();
+        }
+        uPrice_val17 = uPrice17.val();
+        total17=rowTotal(qty_val17, uPrice_val17); 
+        extPrice17.val(total17.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //Operator Bracket
+    var qty18= $("#otheroepnaccsrquan");
+    var uPrice18 = $("#otheroepnaccsruprice");
+    var extPrice18 = $('#otheroepnaccsrextprice');
+    var total18= 0;
+    var qty_val18 = 0;
+    var uPrice_val18 = 0;
+    qty18.on("input ",function(){
+        if (uPrice18 && uPrice18.val()) {
+          uPrice_val18 = uPrice18.val();
+        }
+        qty_val18 = qty18.val();
+        total18=rowTotal(qty_val18, uPrice_val18); 
+        extPrice18.val(total18.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice18.keyup(function(){
+        if (qty18 && qty18.val()) {
+          qty_val18 = qty18.val();
+        }
+        uPrice_val18 = uPrice18.val();
+        total18=rowTotal(qty_val18, uPrice_val18); 
+        extPrice18.val(total18.toFixed(2)); 
+        grandtotal();       
+    });  
+
+    //Parts
+    //Part1
+    var qty19= $("#partQty1");
+    var uPrice19 = $("#partUPrice1");
+    var extPrice19 = $('#partEPrice1');
+    var total19= 0;
+    var qty_val19 = 0;
+    var uPrice_val19 = 0;
+    qty19.on("input ",function(){
+        if (uPrice19 && uPrice19.val()) {
+          uPrice_val19 = uPrice19.val();
+        }
+        qty_val19 = qty19.val();
+        total19=rowTotal(qty_val19, uPrice_val19); 
+        extPrice19.val(total19.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice19.keyup(function(){
+        if (qty19 && qty19.val()) {
+          qty_val19 = qty19.val();
+        }
+        uPrice_val19 = uPrice19.val();
+        total19=rowTotal(qty_val19, uPrice_val19); 
+        extPrice19.val(total19.toFixed(2)); 
+        grandtotal();       
+    }); 
+
+    //Part2
+    var qty20= $("#partQty2");
+    var uPrice20 = $("#partUPrice2");
+    var extPrice20 = $('#partEPrice2');
+    var total20= 0;
+    var qty_val20 = 0;
+    var uPrice_val20 = 0;
+    qty20.on("input ",function(){
+        if (uPrice20 && uPrice20.val()) {
+          uPrice_val20 = uPrice20.val();
+        }
+        qty_val20 = qty20.val();
+        total20=rowTotal(qty_val20, uPrice_val20); 
+        extPrice20.val(total20.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice20.keyup(function(){
+        if (qty20 && qty20.val()) {
+          qty_val20 = qty20.val();
+        }
+        uPrice_val20 = uPrice20.val();
+        total20=rowTotal(qty_val20, uPrice_val20); 
+        extPrice20.val(total20.toFixed(2)); 
+        grandtotal();       
+    }); 
+
+    //Part3
+    var qty21= $("#partQty3");
+    var uPrice21 = $("#partUPrice3");
+    var extPrice21 = $('#partEPrice3');
+    var total21= 0;
+    var qty_val21 = 0;
+    var uPrice_val21 = 0;
+    qty21.on("input ",function(){
+        if (uPrice21 && uPrice21.val()) {
+          uPrice_val21 = uPrice21.val();
+        }
+        qty_val21 = qty21.val();
+        total21=rowTotal(qty_val21, uPrice_val21); 
+        extPrice21.val(total21.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice21.keyup(function(){
+        if (qty21 && qty21.val()) {
+          qty_val21 = qty21.val();
+        }
+        uPrice_val21 = uPrice21.val();
+        total21=rowTotal(qty_val21, uPrice_val21); 
+        extPrice21.val(total21.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //Part4
+    var qty22= $("#partQty4");
+    var uPrice22 = $("#partUPrice4");
+    var extPrice22 = $('#partEPrice4');
+    var total22= 0;
+    var qty_val22 = 0;
+    var uPrice_val22 = 0;
+    qty22.on("input ",function(){
+        if (uPrice22 && uPrice22.val()) {
+          uPrice_val22 = uPrice22.val();
+        }
+        qty_val22 = qty22.val();
+        total22=rowTotal(qty_val22, uPrice_val22); 
+        extPrice22.val(total22.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice22.keyup(function(){
+        if (qty22 && qty22.val()) {
+          qty_val22 = qty22.val();
+        }
+        uPrice_val22 = uPrice22.val();
+        total22=rowTotal(qty_val22, uPrice_val22); 
+        extPrice22.val(total22.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //Part5
+    var qty23= $("#partQty5");
+    var uPrice23 = $("#partUPrice5");
+    var extPrice23 = $('#partEPrice5');
+    var total23= 0;
+    var qty_val23 = 0;
+    var uPrice_val23 = 0;
+    qty23.on("input ",function(){
+        if (uPrice23 && uPrice23.val()) {
+          uPrice_val23 = uPrice23.val();
+        }
+        qty_val23 = qty23.val();
+        total23=rowTotal(qty_val23, uPrice_val23); 
+        extPrice23.val(total23.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice23.keyup(function(){
+        if (qty23 && qty23.val()) {
+          qty_val23 = qty23.val();
+        }
+        uPrice_val23 = uPrice23.val();
+        total23=rowTotal(qty_val23, uPrice_val23); 
+        extPrice23.val(total23.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //Labor Details
+    //Labor / Service 1
+    var qty24= $("#laborQty");
+    var uPrice24 = $("#laborUPrice");
+    var extPrice24 = $('#laborEPrice');
+    var total24= 0;
+    var qty_val24 = 0;
+    var uPrice_val24 = 0;
+    qty24.on("input ",function(){
+        if (uPrice24 && uPrice24.val()) {
+          uPrice_val24 = uPrice24.val();
+        }
+        qty_val24 = qty24.val();
+        uPrice_val24 = uPrice24.val();
+        total24=rowTotal(qty_val24, uPrice_val24); 
+        extPrice24.val(total24.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice24.on("input focusin", function(){
+        if (qty24 && qty24.val()) {
+          qty_val24 = qty24.val();
+        }
+        uPrice_val24 = uPrice24.val();
+        qty_val24 = qty24.val();
+        total24=rowTotal(qty_val24, uPrice_val24); 
+        extPrice24.val(total24.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //Labor / Service 2
+    var qty25= $("#laborQty2");
+    var uPrice25 = $("#laborUPrice2");
+    var extPrice25 = $('#laborEPrice2');
+    var total25= 0;
+    var qty_val25 = 0;
+    var uPrice_val25 = 0;
+    qty25.on("input ",function(){
+        if (uPrice25 && uPrice25.val()) {
+          uPrice_val25 = uPrice25.val();
+        }
+        qty_val25 = qty25.val();
+        total25=rowTotal(qty_val25, uPrice_val25); 
+        extPrice25.val(total25.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice25.on("input focusin", function(){
+        if (qty25 && qty25.val()) {
+          qty_val25 = qty25.val();
+        }
+        uPrice_val25 = uPrice25.val();
+        total25=rowTotal(qty_val25, uPrice_val25); 
+        extPrice25.val(total25.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //Labor / Service 3
+    var qty26= $("#laborQty3");
+    var uPrice26 = $("#laborUPrice3");
+    var extPrice26 = $('#laborEPrice3');
+    var total26= 0;
+    var qty_val26 = 0;
+    var uPrice_val26 = 0;
+    qty26.on("input ",function(){
+        if (uPrice26 && uPrice26.val()) {
+          uPrice_val26 = uPrice26.val();
+        }
+        qty_val26 = qty26.val();
+        total26=rowTotal(qty_val26, uPrice_val26); 
+        extPrice26.val(total26.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice26.on("input focusin", function(){
+        if (qty26 && qty26.val()) {
+          qty_val26 = qty26.val();
+        }
+        uPrice_val26 = uPrice26.val();
+        total26=rowTotal(qty_val26, uPrice_val26); 
+        extPrice26.val(total26.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //Labor / Service 4
+    var qty27= $("#laborQty4");
+    var uPrice27 = $("#laborUPrice4");
+    var extPrice27 = $('#laborEPrice4');
+    var total27= 0;
+    var qty_val27 = 0;
+    var uPrice_val27 = 0;
+    qty27.on("input ",function(){
+        if (uPrice27 && uPrice27.val()) {
+          uPrice_val27 = uPrice27.val();
+        }
+        qty_val27 = qty27.val();
+        total27=rowTotal(qty_val27, uPrice_val27); 
+        extPrice27.val(total27.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice27.on("input focusin", function(){
+        if (qty27 && qty27.val()) {
+          qty_val27 = qty27.val();
+        }
+        uPrice_val27 = uPrice27.val();
+        total27=rowTotal(qty_val27, uPrice_val27); 
+        extPrice27.val(total27.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //Labor / Service 5
+    var qty28= $("#laborQty5");
+    var uPrice28 = $("#laborUPrice5");
+    var extPrice28 = $('#laborEPrice5');
+    var total28= 0;
+    var qty_val28 = 0;
+    var uPrice_val28 = 0;
+    qty28.on("input ",function(){
+        if (uPrice28 && uPrice28.val()) {
+          uPrice_val28 = uPrice28.val();
+        }
+        qty_val28 = qty28.val();
+        total28=rowTotal(qty_val28, uPrice_val28); 
+        extPrice28.val(total28.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice28.on("input focusin", function(){
+        if (qty28 && qty28.val()) {
+          qty_val28 = qty28.val();
+        }
+        uPrice_val28 = uPrice28.val();
+        total28=rowTotal(qty_val28, uPrice_val28); 
+        extPrice28.val(total28.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //Labor / Service 6
+    var qty29= $("#laborQty6");
+    var uPrice29 = $("#laborUPrice6");
+    var extPrice29 = $('#laborEPrice6');
+    var total29= 0;
+    var qty_val29 = 0;
+    var uPrice_val29 = 0;
+    qty29.on("input ",function(){
+        if (uPrice29 && uPrice29.val()) {
+          uPrice_val29 = uPrice29.val();
+        }
+        qty_val29 = qty29.val();
+        total29=rowTotal(qty_val29, uPrice_val29); 
+        extPrice29.val(total29.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice29.on("input focusin", function(){
+        if (qty29 && qty29.val()) {
+          qty_val29 = qty29.val();
+        }
+        uPrice_val29 = uPrice29.val();
+        total29=rowTotal(qty_val29, uPrice_val29); 
+        extPrice29.val(total29.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //Labor / Service 7
+    var qty30= $("#laborQty7");
+    var uPrice30 = $("#laborUPrice7");
+    var extPrice30 = $('#laborEPrice7');
+    var total30= 0;
+    var qty_val30 = 0;
+    var uPrice_val30 = 0;
+    qty30.on("input ",function(){
+        if (uPrice30 && uPrice30.val()) {
+          uPrice_val30 = uPrice30.val();
+        }
+        qty_val30 = qty30.val();
+        total30=rowTotal(qty_val30, uPrice_val30); 
+        extPrice30.val(total30.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice30.on("input focusin", function(){
+        if (qty30 && qty30.val()) {
+          qty_val30 = qty30.val();
+        }
+        uPrice_val30 = uPrice30.val();
+        total30=rowTotal(qty_val30, uPrice_val30); 
+        extPrice30.val(total30.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //Labor / Service 8
+    var qty31= $("#laborQty8");
+    var uPrice31 = $("#laborUPrice8");
+    var extPrice31 = $('#laborEPrice8');
+    var total31= 0;
+    var qty_val31 = 0;
+    var uPrice_val31 = 0;
+    qty31.on("input ",function(){
+        if (uPrice31 && uPrice31.val()) {
+          uPrice_val31 = uPrice31.val();
+        }
+        qty_val31 = qty31.val();
+        total31=rowTotal(qty_val31, uPrice_val31); 
+        extPrice31.val(total31.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice31.keyup(function(){
+        if (qty31 && qty31.val()) {
+          qty_val31 = qty31.val();
+        }
+        uPrice_val31 = uPrice31.val();
+        total31=rowTotal(qty_val31, uPrice_val31); 
+        extPrice31.val(total31.toFixed(2)); 
+        grandtotal();       
+    });
+
+
+    //Labor / Service 9
+    var qty32= $("#laborQty9");
+    var uPrice32 = $("#laborUPrice9");
+    var extPrice32 = $('#laborEPrice9');
+    var total32= 0;
+    var qty_val32 = 0;
+    var uPrice_val32 = 0;
+    qty32.on("input ",function(){
+        if (uPrice32 && uPrice32.val()) {
+          uPrice_val32 = uPrice32.val();
+        }
+        qty_val32 = qty32.val();
+        total32=rowTotal(qty_val32, uPrice_val32); 
+        extPrice32.val(total32.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice32.keyup(function(){
+        if (qty32 && qty32.val()) {
+          qty_val32 = qty32.val();
+        }
+        uPrice_val32 = uPrice32.val();
+        total32=rowTotal(qty_val32, uPrice_val32); 
+        extPrice32.val(total32.toFixed(2)); 
+        grandtotal();       
+    });
+
+    //Labor / Service 10
+    var qty33= $("#laborQty10");
+    var uPrice33 = $("#laborUPrice10");
+    var extPrice33 = $('#laborEPrice10');
+    var total33= 0;
+    var qty_val33 = 0;
+    var uPrice_val33 = 0;
+    qty33.on("input ",function(){
+        if (uPrice33 && uPrice33.val()) {
+          uPrice_val33 = uPrice33.val();
+        }
+        qty_val33 = qty33.val();
+        total33=rowTotal(qty_val33, uPrice_val33); 
+        extPrice33.val(total33.toFixed(2));  
+        grandtotal();      
+    });  
+    uPrice33.keyup(function(){
+        if (qty33 && qty33.val()) {
+          qty_val33 = qty33.val();
+        }
+        uPrice_val33 = uPrice33.val();
+        total33=rowTotal(qty_val33, uPrice_val33); 
+        extPrice33.val(total33.toFixed(2)); 
+        grandtotal();       
+    });
+
+   //ShippingCost
+   var sCost = $("#shipCost");
+   var sCost_val = 0;
+   sCost.keyup(function(){
+      sCost_val = isNaN(sCost.val())? 0.0 :sCost.val();
+      sCost.val(isNaN(sCost_val)? 0.0 :sCost_val);
+      grandtotal();
+   });
+
+
+    function rowTotal(qty, price){
+       total_row=isNaN(parseFloat(qty* price)) ? 0 :(qty* price);
+       return total_row;
+    }
+    function field_check(func_val){
+      local_val = isNaN(parseFloat(func_val.val()))? 0 :parseFloat(func_val.val());
+      return local_val;
+    }
+
+
+    function materialTotal(){
+     
+      total = field_check($("#dsExtPrice"));
+      total2 = field_check($("#clrExtPrice"));
+      total_stamp = field_check($("#stampDesign_ExtPrice"));
+      total_spring = field_check($("#spring_type_ExtPrice"));
+      total3 = field_check($("#addStrutsExtPrice"));
+      total4 = field_check($("#glassExtPrice"));
+      total5 = field_check($("#decaTrimExtPrice"));
+      total6 = field_check($("#trackTypeExtPrice"));
+      total7 = field_check($("#decoHndlExtPrice"));
+      total8 = field_check($("#decoHngsExtPrice"));
+      total9 = field_check($("#othHExtPrice"));
+      total9_h = field_check($("#vinTStopExtPrice_height"));
+      total10 = field_check($("#vinTStopExtPrice"));
+      total11 = field_check($("#lockTypeExtPrice"));
+      total12 = field_check($("#punchedAngleExtPrice"));
+      total13 = field_check($("#winbarsextprice"));
+      total14 = field_check($("#othdooraccsextprice"));
+      total15 = field_check($("#openermodextprice"));
+      total16 = field_check($("#openeraccextprice"));
+      total17 = field_check($("#opbracketextprice"));
+      total18 = field_check($("#otheroepnaccsrextprice"));
+
+      total19 = field_check($("#partEPrice1"));
+      total20 = field_check($("#partEPrice2"));
+      total21 = field_check($("#partEPrice3"));
+      total22 = field_check($("#partEPrice4"));
+      total23 = field_check($("#partEPrice5"));
+
+      var mTotal = total + total2 + total_stamp + total_spring + total3 + total4 + total5 + total6 + total7 + total8 + total11 + total9 + total9_h + total10 + total12 + total13 + total14 + total15 + total16 + total17 + total18 + total19 + total20 + total21 + total22 + total23;
+      mTotal = mTotal.toFixed(2);
+      return mTotal;
+    }
+    function laborTotal(){
+      total24 = field_check($("#laborEPrice"));
+      total25 = field_check($("#laborEPrice2"));
+      total26 = field_check($("#laborEPrice3"));
+      total27 = field_check($("#laborEPrice4"));
+      total28 = field_check($("#laborEPrice5"));
+      total29 = field_check($("#laborEPrice6"));
+      total30 = field_check($("#laborEPrice7"));
+      total31 = field_check($("#laborEPrice8"));
+      total32 = field_check($("#laborEPrice9"));
+      total33 = field_check($("#laborEPrice10"));
+
+      var lTotal = total24 + total25 + total26 + total27 + total28 + total29 + total30 + total31 + total32 + total33;
+      lTotal = lTotal.toFixed(2);
+      return lTotal;
+    }
+ 
+   function grandtotal() {
+      var mTotal = materialTotal();
+      var lTotal = laborTotal();
+      var s_cost = isNaN(parseFloat($("#shipCost").val()).toFixed(2))? 0.0 :parseFloat($("#shipCost").val()).toFixed(2);
+
+      grandtot =  parseFloat(mTotal) + parseFloat(lTotal) + parseFloat(s_cost);
+      grand_total = isNaN(grandtot.toFixed(2))? 0 :grandtot.toFixed(2);
+      /*grand_total = grandtot.toFixed(2)*/
+      $("#st_MatCost").val(mTotal);
+      $("#st_LabrCost").val(lTotal);
+      $("#total").val(grand_total);
+    } 
+   
+    
+});
+</script>
+
+<style type="text/css">
+  input:invalid {
+  border: red solid 1px;
+}
+</style>
+ 
+
+
+{% endblock %}
+

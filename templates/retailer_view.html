@@ -1,0 +1,163 @@
+{% extends "index.html" %}
+{% set userNameCurrent =  user %}
+{% set currentRetailer = retailer %}
+{% set org = ret_name %}
+{% block title %}Contractor View{% endblock %}
+{% block dc_view %}   
+
+
+<section id="retailer_card" class="bg bg-lighta border-double mt-3 mb-4">
+    <div class="bg bg-lighta">
+        <div class="row">
+            <div class="sec_title">
+              <h6 id="select_txt">Retailers &nbsp;<span class="badge badge-pill badge-secondary">{{count_activeRet}}</span></h6>
+            </div>
+        </div>
+
+        <div class="row mt-4 pl-4 pr-4">
+            {% for p in rtlrList %}
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 mb-4">             
+                <div class="card">
+                    {% if p["account"] %} 
+                    <button class="card-header bg bg-secondary text-light rounded" data-toggle="collapse" data-target="#record{{loop.index}}" type="button">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <i class="fa fa-angle-down d-inline float-left"  style="font-size:1.5em"></i> &nbsp; {{p["program_name"]}}
+                            </div>  
+                            <div class="col-lg-4"># {{p["account"]}}</div>
+                        </div>
+                    </button>
+                    {% endif %}
+                    <div id="record{{loop.index}}" class="collapse">
+                        <div class="card-body"> 
+                        <div class="row">
+
+                            {% if p["address_1"] %}
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                                <div class="col-lg-12 border-bottom font-weight-bold">
+                                        <i class="fa fa-address-card pt-1"></i>&nbsp;&nbsp;Address
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Address </i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["address_1"]}}</div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>City</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["city"]}}</div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>State </i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["ret_state"]}}</div>
+                                
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Country</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["ret_country"]}}</div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Zip Code</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["ret_zip"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Start Date</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["hire_date"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Status</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["status"]}}</div>
+                            </div>
+                            {% endif %}
+
+                            {% if p["account"] %} 
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 font-weight-bold border-bottom">
+                                  <i class="fa fa-address-card pt-1"></i>&nbsp;&nbsp;Primary Contact
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Job Title</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["job_title_1"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>First Name</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> {{p["first_name_1"]}}</div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Last Name</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> {{p["last_name_1"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Office</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> {{p["contact_number_1"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Ext #</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> {{p["phone_ext"]}}</div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Mobile</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> {{p["mobile_number_1"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Email</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> {{p["email_1"]}}</div>
+                            </div>
+                            {% endif %}
+                   
+                        
+                        
+
+
+                            {% if p["first_name_2"] %}
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="col-lg-12 border-bottom font-weight-bold">
+                                  <i class="fa fa-address-card pt-1"></i>&nbsp;&nbsp;Second Contact
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Job Title</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["job_title_2"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>First Name</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["first_name_2"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Last Name</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["last_name_2"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Phone Number</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["contact_number_2"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Mobile</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["mobile_number_2"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Email</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["email_2"]}}</div>
+                            </div>
+                            {% endif %} 
+
+
+
+                            {% if p["first_name_3"] %}
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="col-lg-12 border-bottom font-weight-bold">
+                                    <i class="fa fa-address-card pt-1"></i>&nbsp;&nbsp;Third Contact
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Job Title</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["job_title_3"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>First Name</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["first_name_3"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Last Name</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["last_name_3"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Phone Number</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["contact_number_3"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Mobile</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["mobile_number_3"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Email</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["email_3"]}}</div>
+                            </div>
+                            {% endif %} 
+
+
+                            {% if p["first_name_4"] %}
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="col-lg-12 border-bottom font-weight-bold">
+                                    <i class="fa fa-address-card pt-1"></i>&nbsp;&nbsp;Fourth Contact
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Job Title</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["job_title_4"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>First Name</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["first_name_4"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Last Name</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["last_name_4"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Phone Number</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["contact_number_4"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Mobile</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["mobile_number_4"]}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Email</i></u></small></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{p["email_4"]}}</div>
+                            </div>
+                            {% endif %}                      
+
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                    
+            </div>
+            {% endfor %}
+        </div>
+</section>
+
+
+{% endblock %}
