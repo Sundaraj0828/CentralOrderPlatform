@@ -1,0 +1,139 @@
+{% extends "index.html" %}
+{% set userNameCurrent=  user %}
+{% set retailer_info = session['retailers'] %}
+{% block title %}Labor Rate Summary{% endblock %}
+{% block laborRate_summary %}
+
+
+
+<section id="section1" class="container-fluid">
+	<div class="row bg bg-lighta mb-3 pb-3">	
+		<a href="{{url_for('setBasicInformation', po_no = po_num)}}" class="btn btn-dark btn-sm float-left ml-3" ><i class="fa fa-arrow-left"></i> Go Back</a>
+		<div class="sec_title">
+	    	<h6>Account Payable Summary</h6>
+	  	</div>
+		
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4">	
+	  		<h4>Retailer PO# : {{po_num}}</h4>
+	  	</div>
+
+	  	{% for rl in rates_list %}
+	  	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4">	
+	  		<h6>Collection id - {{rl['door_spec_id']}}</h6>
+	  	</div>
+	  	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pt-0 pb-1 bg bg-secondary text-light">
+			<div class="row">
+				<div class="col-lg-6">Labor Type</div>
+				<div class="col-lg-1">Quantity</div>
+				<div class="col-lg-2">Rate Type</div>
+				<div class="col-lg-1">Unit Price</div>
+				<div class="col-lg-2">Extended Price</div>
+			</div>
+	  	</div>
+	  	<div class="col-lg-12">
+	  		{% if rl['labortype1_name'] %}
+	  		<div class="row">
+				<div class="col-lg-6">{{rl['labortype1_name']}}</div>
+				<div class="col-lg-1">{{rl['labortype1_qty']}}</div>
+				<div class="col-lg-2">{{rl['labortype1_rate_type']}}</div>
+				<div class="col-lg-1">{{rl['labortype1_unit_price']}}</div>
+				<div class="col-lg-2">{{rl['labortype1_ext_price']}}</div>	  			
+	  		</div>
+	  		{% endif %}
+	  		{% if rl['labortype2_name'] %}
+	  		<div class="row">
+				<div class="col-lg-6">{{rl['labortype2_name']}}</div>
+				<div class="col-lg-1">{{rl['labortype2_qty']}}</div>
+				<div class="col-lg-2">{{rl['labortype2_rate_type']}}</div>
+				<div class="col-lg-1">{{rl['labortype2_unit_price']}}</div>
+				<div class="col-lg-2">{{rl['labortype2_ext_price']}}</div>	  			
+	  		</div>
+	  		{% endif %}
+	  		{% if rl['labortype3_name'] %}
+	  		<div class="row">
+				<div class="col-lg-6">{{rl['labortype3_name']}}</div>
+				<div class="col-lg-1">{{rl['labortype3_qty']}}</div>
+				<div class="col-lg-2">{{rl['labortype3_rate_type']}}</div>
+				<div class="col-lg-1">{{rl['labortype3_unit_price']}}</div>
+				<div class="col-lg-2">{{rl['labortype3_ext_price']}}</div>	  			
+	  		</div>
+	  		{% endif %}
+	  		{% if rl['labortype4_name'] %}
+	  		<div class="row">
+				<div class="col-lg-6">{{rl['labortype4_name']}}</div>
+				<div class="col-lg-1">{{rl['labortype4_qty']}}</div>
+				<div class="col-lg-2">{{rl['labortype4_rate_type']}}</div>
+				<div class="col-lg-1">{{rl['labortype4_unit_price']}}</div>
+				<div class="col-lg-2">{{rl['labortype4_ext_price']}}</div>	  			
+	  		</div>
+	  		{% endif %}
+	  		{% if rl['labortype5_name'] %}
+	  		<div class="row">
+				<div class="col-lg-6">{{rl['labortype5_name']}}</div>
+				<div class="col-lg-1">{{rl['labortype5_qty']}}</div>
+				<div class="col-lg-2">{{rl['labortype5_rate_type']}}</div>
+				<div class="col-lg-1">{{rl['labortype5_unit_price']}}</div>
+				<div class="col-lg-2">{{rl['labortype5_ext_price']}}</div>	  			
+	  		</div>
+	  		{% endif %}
+	  		{% if rl['labortype6_name'] %}
+	  		<div class="row">
+				<div class="col-lg-6">{{rl['labortype6_name']}}</div>
+				<div class="col-lg-1">{{rl['labortype6_qty']}}</div>
+				<div class="col-lg-2">{{rl['labortype6_rate_type']}}</div>
+				<div class="col-lg-1">{{rl['labortype6_unit_price']}}</div>
+				<div class="col-lg-2">{{rl['labortype6_ext_price']}}</div>	  			
+	  		</div>
+	  		{% endif %}
+	  		{% if rl['labortype7_name'] %}
+	  		<div class="row">
+				<div class="col-lg-6">{{rl['labortype7_name']}}</div>
+				<div class="col-lg-1">{{rl['labortype7_qty']}}</div>
+				<div class="col-lg-2">{{rl['labortype7_rate_type']}}</div>
+				<div class="col-lg-1">{{rl['labortype7_unit_price']}}</div>
+				<div class="col-lg-2">{{rl['labortype7_ext_price']}}</div>	  			
+	  		</div>
+	  		{% endif %}
+	  		{% if rl['labortype8_name'] or rl['labortype9_name'] or rl['labortype10_name'] %}
+	  		<div class="row">
+	  			<div class="col-lg-12 border-top border-bottom pt-2">
+	  				<h6>Special Labor Rates</h6>
+	  			</div>
+	  		</div>
+	  		{% endif %}
+	  		{% if rl['labortype8_name'] %}
+	  		<div class="row">
+				<div class="col-lg-6">{{rl['labortype8_name']}}</div>
+				<div class="col-lg-1">{{rl['labortype8_qty']}}</div>
+				<div class="col-lg-2">{{rl['labortype8_rate_type']}}</div>
+				<div class="col-lg-1">{{rl['labortype8_unit_price']}}</div>
+				<div class="col-lg-2">{{rl['labortype8_ext_price']}}</div>	  			
+	  		</div>
+	  		{% endif %}
+	  		{% if rl['labortype9_name'] %}
+	  		<div class="row">
+				<div class="col-lg-6">{{rl['labortype9_name']}}</div>
+				<div class="col-lg-1">{{rl['labortype9_qty']}}</div>
+				<div class="col-lg-2">{{rl['labortype9_rate_type']}}</div>
+				<div class="col-lg-1">{{rl['labortype9_unit_price']}}</div>
+				<div class="col-lg-2">{{rl['labortype9_ext_price']}}</div>	  			
+	  		</div>
+	  		{% endif %}
+	  		{% if rl['labortype10_name'] %}
+	  		<div class="row">
+				<div class="col-lg-6">{{rl['labortype10_name']}}</div>
+				<div class="col-lg-1">{{rl['labortype10_qty']}}</div>
+				<div class="col-lg-2">{{rl['labortype10_rate_type']}}</div>
+				<div class="col-lg-1">{{rl['labortype10_unit_price']}}</div>
+				<div class="col-lg-2">{{rl['labortype10_ext_price']}}</div>	  			
+	  		</div>
+	  		{% endif %}
+	  	</div>
+	  	{% endfor %}
+	</div>
+</section>
+
+
+
+
+{% endblock %}

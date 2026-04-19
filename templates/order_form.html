@@ -1,0 +1,295 @@
+{% extends "index.html" %}
+{% set userNameCurrent =  user %}
+{% set currentRetailer = retailer %}
+{% set ret_name = session['retailer_name_asc'] %}
+{% set retailer_info = session['retailers'] %}
+{% block title %}Order Listing{% endblock %}
+{% block orderformTemp %}
+<button type="button" class="btn btn-info position-fixed align-middle rounded-circle refresh_button" onClick="window.location.reload()" data-toggle="tooltip" title="Reload the page" data-placement="left"><i class="fa fa-refresh fa-spin"></i></button>
+
+<section id="top" class="container-fluid text-center bg bg-light border-double mt-4 pb-4 pt-4 pl-2">
+    <div class="row">
+       
+
+         
+         <!-- Search-->
+
+         <form class="form-horizontal col-md-4 col-lg-2 col-sm-6 col-xs-12" method="POST" action="/search_orders/1">
+            <div class="row">
+                <div class="input-group mb-3 col-lg-12">
+                    <input type="text" class="form-control d-inline border border-success" id="searchByPONumber" placeholder="PO Number" name="searchByPONumber" required>
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-success d-inline"><i class="fa fa-search"></i></button>
+                      </div>
+                </div>
+            </div>
+        </form>
+       
+        
+        <form class="form-horizontal col-md-4 col-lg-2 col-sm-6 col-xs-12" method="POST" action="/search_orders/2">
+            <div class="row">
+                <div class="input-group mb-3 col-lg-12">
+                    <select name="searchByDC" id="searchByDC" class="custom-select border border-success" >
+                        <option value="" selected disabled>Select DC</option>
+                        {% for dc in dc_assigned_unique_list %}
+                            <option value="{{dc}}">{{dc}} - {{dc_assigned_unique_list[dc]}}</option>
+                        {% endfor %}
+                    </select>
+                    <!-- <input type="text" class="form-control" id="searchByDC" placeholder="DC" name="searchByDC" > -->
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <form class="form-horizontal col-md-4 col-lg-2 col-sm-6 col-xs-12" method="POST" action="/search_orders/3">        
+            <div class="row">
+                <div class="input-group mb-3 col-lg-12">                    
+                    <select name="searchByStatus" id="searchByStatus" class="custom-select border border-success">
+                        <option value="" selected disabled>Select Overall Status</option>
+                        {% for sl in search_status_list %}
+                            <option value="{{sl}}">{{sl}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+
+            </div>
+        </form>   
+
+        <!-- DIY status search -->
+        <form class="form-horizontal col-md-4 col-lg-2 col-sm-6 col-xs-12" method="POST" action="/search_orders/4">        
+            <div class="row">
+                <div class="input-group mb-3 col-lg-12">                    
+                    <select name="searchByStatusDIY" id="searchByStatusDIY" class="custom-select border border-success">
+                        <option value="" selected disabled>Select DIY Status</option>
+                        {% for sd in status_diy %}
+                            <option value="{{sd['status_code']}}">{{sd['status_code']}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+
+            </div>
+        </form> 
+
+        <!-- F&I status search -->
+        <form class="form-horizontal col-md-4 col-lg-2 col-sm-6 col-xs-12" method="POST" action="/search_orders/5">        
+            <div class="row">
+                <div class="input-group mb-3 col-lg-12">                    
+                    <select name="searchByStatusFNI" id="searchByStatusFNI" class="custom-select border border-success">
+                        <option value="" selected disabled>Select F&I Status</option>
+                        {% for sf in status_fni %}
+                            <option value="{{sf['status_code']}}">{{sf['status_code']}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+
+            </div>
+        </form> 
+
+        
+
+        <form class="col-md-4 col-lg-2 col-sm-6 col-xs-12" method="POST" action="{{url_for('viewAll')}}">
+            <div class="form-group">
+                <button type="submit" class="btn btn-outline-success d-inline">View All</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+<section id="section2" class="bg bg-lighta pl-3 pr-3">
+    <div class="sec_title">
+        <h6 id="select_txt">{{ret_name}} - Orders 
+            &nbsp;<span class="badge badge-pill badge-secondary">&nbsp;{{order_Count}} &nbsp;</span>&nbsp;
+        </h6>
+    </div>
+    <div class="col-lg-12 mt-4 pt-3">
+        <div id="select_txt1" class="">
+            <div class="row bg bg-dark text-light">
+                <div class="col-lg-1 col-md-1 font-weight-bold pt-1 pb-1 border">PO #</div>
+                <div class="col-lg-3 col-md-3 font-weight-bold pt-1 pb-1 border">CONSUMER NAME</div>
+                <div class="col-lg-2 col-md-2 font-weight-bold pt-1 pb-1 border">SUBMITTED</div>
+                <div class="col-lg-1 col-md-1 font-weight-bold pt-1 pb-1 border">DC</div>
+                <div class="col-lg-1 col-md-1 font-weight-bold pt-1 pb-1 border">PRICE</div>
+                <div class="col-lg-2 col-md-2 font-weight-bold pt-1 pb-1 border">STATUS</div>
+                <div class="col-lg-2 col-md-2 font-weight-bold pt-1 pb-1 border" >ACTIONS</div>
+            </div>
+            {% for d in basicInfoList|reverse %}
+            <div class="row">
+                <div class="col-lg-1 col-md-1 border">{{d["retailer_po_no"]}}</div>
+                <div class="col-lg-3 col-md-3 border">
+                    <span {% if d['asc_order_processing_date'] %} class="badge badge-success " title="order processed on<br>{{d['asc_order_processing_date']}}<br>by {{d['asc_order_processing_by']}}" {% else %} class="badge badge-secondary" {% endif %} data-toggle="tooltip" data-html="true">CF</span>
+                    
+                    <span {% if d['dc_material_available_date'] %} class="badge badge-success" title="order transfered to<br>{{d['door_center_name']}}<br>on {{d['dc_transfer_date']}}"{% else %} class="badge badge-secondary" {% endif %} data-toggle="tooltip" data-html="true">DC</span>
+
+                    <span {% if d['con_material_available_date'] %} class="badge badge-success mr-3" title="order transfered to<br>{{d['contractor_name']}}<br>on {{d['contractor_processig_date']}} " {% else %} class="badge badge-secondary mr-3" {% endif %} data-toggle="tooltip" data-html="true">C</span>
+                    {{d["consumer_firstname"]}} {{d["consumer_lastname"]}}
+                </div>
+                <div class="col-lg-2 col-md-2 border">
+                    {% if d['order_submitted_date'] %}
+                        {% set date_val_list= d["order_submitted_date"].split(' ') %} 
+                            {{date_val_list[1]}}&nbsp;{{date_val_list[2]}},&nbsp;{{date_val_list[0]}}
+                    {% else %} {{d['order_submitted_date']}}
+                    {% endif %}
+
+                     <span class="badge badge-secondary"  data-toggle="tooltip" title="Elapsed days" >{{d['el_days']}} days</span>
+
+                    {% if d['r_days'] %}
+                        {% if d['r_days'] > 0 %}
+                        <span if  class="badge badge-secondary"  data-toggle="tooltip" title="Estimated days">{{d['r_days']}} days</span>
+                        {% else %}
+                        <span if  class="badge badge-danger"  data-toggle="tooltip" title="Estimated days">{{d['r_days']}} days</span>
+                        {%endif %}
+                    {% endif %}
+
+                    
+                   
+                    
+                </div>
+                <div class="col-lg-1 col-md-1 border">{{d["door_center_name"]}} </div>
+                 {% set totalOrder = d["total_order"] | int %} 
+                <div class="col-lg-1 col-md-1 border">{{"${:,.2f}".format(totalOrder)}}</div>
+                <div class="col-lg-2 col-md-1 border">{{d["status"]}}</div>
+                <div class="col-lg-2 col-md-2 border">
+                    {% if d['status'] == 'Order Submitted' %}
+                    <form method="POST" action="/orderProcessing/{{d['retailer_po_no']}}" class="" >
+                        <div class="form-group ">
+                            <button type="submit" class="btn btn-warning btn-sm mr-1 d-inline float-left"  data-toggle="tooltip" title="Process Order">Process <i class="fa fa-check" aria-hidden="true"></i></button>
+                        </div>
+                    </form>
+                       
+                    {% else %}
+
+                      <form method="POST" action="/edit/{{d['retailer_po_no']}}" class="" >
+                        <div class="form-group ">
+                            <button type="submit" class="btn btn-info btn-sm mr-1 d-inline float-left"  data-toggle="tooltip" title="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                        </div>
+                    </form>
+                    
+                         
+                    {% endif %}
+                        
+                    <div class="form-group float-left"  data-toggle="tooltip" title="Status history">
+                        <button type="button" class="btn btn-primary btn-sm d-inline"  data-toggle="modal" data-target="#viewLog{{loop.index}}">H</button>
+                    </div> 
+
+                    <!-- Modal viewLog-->
+                    <div class="modal fade" id="viewLog{{loop.index}}">
+                        <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
+                          <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header bg bg-secondary text-light">
+                              <h6 class="modal-title">Status history for PO - {{d["retailer_po_no"]}}</h6>
+                              <button type="button" class="close text-light" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <div class="bg bg-dark text-light pt-1 pb-1 pr-3 pl-3">
+                                Logs
+                              </div>
+                            <!-- Modal body -->
+                            <div class="modal-body  overflow-auto">
+                               <table id="select_txt1" class="table table-bordered">
+                                   <!--  <tr class="bg bg-dark text-light">                                         
+                                        <th>Logs</th>
+                                    </tr>  -->
+                                    {% for l in logFile|reverse %}                                      
+                                    {% if l['retailer_po_no'] == d['retailer_po_no'] %}                                        
+                                        <tr>                                             
+                                            <td class="text-left">                                               
+                                            <small>{{l['activity_name']}} was {{l['activity_type']}} by {{l['activity_user']}} at {{l['activity_time']}} </small><span  class="badge badge-pill badge-secondary ml-2">{{l['tag']}}</span>                                                
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    {% endfor %}
+                                </table>
+                            </div>
+                                
+                              </div>
+                            </div>
+                        </div>
+                        <!-- Modal for Notes -->
+
+
+                        <div class="form-group float-left" data-toggle="tooltip" title="Note">                    
+                          <button role="button" class="btn btn-secondary btn-sm ml-1"  data-toggle="modal" data-target="#notes{{loop.index}}">N</button>                        
+                        </div>
+                    </div>
+
+                </div>
+                
+
+
+                        <!-- Modal notes-->
+                      <div class="modal fade" id="notes{{loop.index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header bg bg-secondary text-light">
+                              <h5 class="modal-title" id="exampleModalLongTitle">Notes {{d["retailer_po_no"]}}</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" class="text-light">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                                
+
+                                    {% for n in notes %}
+                                       <!--  <p>{{n['Retailer_PO_No']}} - {{d['Retailer_PO_No']}}</p> -->
+                                        {% if n['retailer_po_no'] == d['retailer_po_no'] %}
+
+                                        <div class="bg bg-light mb-2 pt-2{% if n['sender_org'] == 'Central Facility' %} text text-primary {% endif %}">
+
+                                            <span class="border-bottom border-secondary text-dark mr-2 ml-2"><small><em>{{n['sender']}}</em>( {{n['sender_org']}} )</small> - <small>{{n['sending_time']}}</small></span>
+                                            <p class="mr-2 ml-2">{{n['message']}}</p>
+                                            <hr />
+                                        </div>
+                                        
+                                        {% else %}
+                                            <div class="bg bg-light  mb-2 pt-2" style="display: none"></div>
+                                        {% endif %}
+                                    {% endfor %}
+                                
+                            </div>
+                            
+                          </div>
+                        </div>
+                      </div> 
+                      <!-- Modal for Notes -->
+
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">                    
+        <div class="col-lg-10 text-right">
+            <div id="pagination" class="m-3">
+                <ul class="pagination pagination-sm">
+                               
+                    <li class="page-item">
+                        {% for n in range(total_pages) %}
+                            <form class="d-inline" method="POST" action="/order/{{n}}/{{records_Per_Page}}/{{searchCodePage}}/{{searchTermPage}}">
+                                <button type="submit" class="btn btn-dark btn-sm">{{n+1}}</button>
+                            </form>
+                        {% endfor %}
+                    </li>                    
+                    <!-- <li class="page-item"><a class="btn btn-outline-dark btn-sm ml-1" href="#">Next</a></li> -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+              
+   
+    
+
+{% endblock %}

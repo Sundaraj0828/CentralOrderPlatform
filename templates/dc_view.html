@@ -1,0 +1,125 @@
+{% extends "index.html" %}
+{% set userNameCurrent =  user %}
+{% set currentRetailer = retailer %}
+{% set org = ret_name %}
+{% block title %}Contractor View{% endblock %}
+{% block dc_view %} 
+
+
+<section id="dc_card" class="bg bg-lighta border-double mt-3">
+    <div class="bg bg-lighta">
+        <div class="row">
+            <div class="sec_title">
+                <h6 id="select_txt">Door Center &nbsp;<span class="badge badge-pill badge-secondary">{{count_activeDC}}</span></h6>
+            </div>
+        </div>
+    </div>
+        <div class="row mt-4 pl-4 pr-4">
+
+            {% for d in dcbasicinfolist %}
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4">             
+                <div class="card">
+                    {% if d["dc_number"] %}
+                    <button class="card-header bg bg-secondary text-light rounded text-left" data-toggle="collapse" data-target="#record{{loop.index}}" type="button">
+                      <div class="row">
+                      <div class="col-lg-2"><i class="fa fa-angle-down d-inline float-left" style="font-size:1.5em"></i> &nbsp; {{d["dc_name"]}}</div>
+                      <div class="col-lg-2"># {{d["dc_number"]}}</div>
+                      <div class="col-lg-4"> {{d["dc_email"]}}</div>
+                      <div class="col-lg-2">Phone - {{d["dc_phone"]}}</div>                     
+                      
+                    </div>
+                  </button>
+                    {% endif %}
+                                 
+
+
+                      <div id="record{{loop.index}}" class="collapse">
+                        <div class="card-body"> 
+                          <div class="row">
+
+                      {% if d["dc_address"] %}
+                      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 font-weight-bold border-bottom">
+                          <i class="fa fa-address-card pt-1"></i> Address
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Address</i></u></small></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">{{d["dc_address"]}}</div>
+                        
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>City</i></u></small></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 "> {{d["dc_city"]}}</div>
+                        
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>State</i></u></small></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 "> {{d["dc_state"]}}</div>
+                        
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Country</i></u></small></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{d["dc_country"]}}</div>
+                        
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Zip</i></u></small></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 "> {{d["dc_zip"]}}</div>
+                      </div>
+                      {% endif %}   
+
+                      {% if d["dc_delivery_by_truck"] %}
+                      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 font-weight-bold border-bottom">
+                          <i class="fa fa-truck pt-1"></i> Delivery
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Truck</i></u></small></small></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{d["dc_delivery_by_truck"]}}</div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Radius</i></u></small></small></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{d["dc_radius"]}}</div>
+                      </div>
+                      {% endif %}
+
+                      
+
+                      {% if d["amarr_dist_manager_first_name"] %}
+                      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 font-weight-bold border-bottom">
+                          <i class="fa fa-address-card pt-1"></i> District Manager
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>First Name</i></u></small></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">{{d["amarr_dist_manager_first_name"]}}</div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Last Name</i></u></small></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 "> {{d["amarr_dist_manager_last_name"]}}</div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Mobile</i></u></small></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">{{d["amarr_dist_manager_contact_number"]}}</div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Email</i></u></small></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 "> {{d["amarr_dist_manager_email"]}}</div>
+                      </div>
+                      {% endif %}
+
+                      {% if d["sales_manager_first_name"] %}
+                      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 font-weight-bold border-bottom">
+                          <i class="fa fa-address-card pt-1"></i> Sales Manager
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>First Name</i></u></small></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">{{d["sales_manager_first_name"]}}</div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Last Name</i></u></small></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 "> {{d["sales_manager_last_name"]}}</div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Mobile</i></u></small></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">{{d["sales_manager_contact_number"]}}</div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><small><u><i>Email</i></u></small></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 "> {{d["sales_manager_email"]}}</div>
+                      </div>
+                      {% endif %}  
+
+                      </div>
+                         </div>
+                    </div>
+                </div>
+            </div> 
+          
+            {% endfor %}
+   
+             </div>
+</section>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,985 @@
+{% extends "index.html" %}
+{% set userNameCurrent=  user %}
+{% block title %}Labor Rate Calculator{% endblock %}
+{% block laborRate %}
+
+<section id="section1" class="container-fluid">
+	<div class="row bg bg-lighta mb-3">
+		<button onclick="goBack()" class="btn btn-dark btn-sm float-left ml-3"><i class="fa fa-arrow-left"></i> Go Back</button>
+	
+		<div class="sec_title"><h6>Order Labor rate <i class="fa fa-info-circle "></i></h6></div>
+
+	  	<div class="col-lg-12 mt-3">
+	  		<form class="form-horizontal " method="POST" action="{{url_for('save_price')}}"name="wform" >
+	  		<div class="row">
+			<!-- col 1 -->
+
+			<div class="col-lg-4 bg bg-light border pt-4">
+				<!-- Row 1 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+
+				<!-- Row 2 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 3 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 4 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 5 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 6 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 7 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 8 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+
+
+
+				<!-- Row 9 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+
+				<!-- Row 10 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 11 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 12 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 13 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 14 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 15 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 16 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				
+			
+			</div>
+
+
+
+			<div class="col-lg-4 bg bg-light border pt-4">
+				<!-- Row 1 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+
+				<!-- Row 2 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 3 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 4 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 5 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 6 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 7 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 8 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+
+
+
+				<!-- Row 9 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+
+				<!-- Row 10 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 11 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 12 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 13 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 14 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 15 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 16 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				
+			
+			</div>
+
+			<div class="col-lg-4 bg bg-light border pt-4">
+				<!-- Row 1 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+
+				<!-- Row 2 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 3 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 4 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 5 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 6 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 7 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 8 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+
+
+
+				<!-- Row 9 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+
+				<!-- Row 10 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 11 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 12 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 13 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 14 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 15 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				<!-- Row 16 -->
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>Label</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue" id="laborValue" class="custom-select" >
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value" name="default_value" placeholder="Default value" value="" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value" name="special_value" placeholder="Special value" >
+					</div>
+				</div>
+				
+			
+			</div>
+
+
+
+
+			</div>
+			<div class="col-lg-4 pt-2">
+				<button type="submit" value="Update" class="d-inline btn btn-info btn-sm">Update</button>
+			</div>
+			</form>
+
+
+				
+
+
+		</div>
+	</div>
+</section>
+
+
+
+
+
+
+
+
+{% endblock %}
