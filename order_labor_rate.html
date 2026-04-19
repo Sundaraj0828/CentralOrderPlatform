@@ -1,0 +1,1009 @@
+{% extends "index.html" %}
+{% set userNameCurrent=  user %}
+{% block title %}Labor Rate Calculator{% endblock %}
+{% block laborRate %}
+
+<section id="section1" class="container-fluid">
+	<div class="row bg bg-lighta mb-3">
+		<a href="{{url_for('setBasicInformation', po_no = p_num)}}" class="btn btn-dark btn-sm float-left ml-3" ><i class="fa fa-arrow-left"></i> Go Back</a>
+	
+		<div class="sec_title">
+	    	<h6>Order Labor rate <i class="fa fa-info-circle "></i></h6>
+	  	</div>
+
+	  	<div class="col-lg-12 mt-3">
+	  		<form class="form-horizontal " method="POST" action="" name="wform" >
+	  		{% for ur in updatedRates %}
+	  		<div class="row">
+			<!-- ************************ col 1 ****************************************************** -->
+			<div class="col-lg-4 bg bg-light border pt-4">
+				<!------------------------ Row 1 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[0]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[0]}}" id="laborValue_{{idNames[0]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[0]}}', 'default_value_{{idNames[0]}}', 'special_value_{{idNames[0]}}' )" value="">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[0]}}" name="default_value_{{idNames[0]}}" placeholder="Default value" value="{{ratesList[0][idNames[0]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" {% if ur[idNames[0]] == 0.0 %} value="{{ur[idNames[0]]}}" {% else %} value="{{ur[idNames[0]]}}" {% endif %} class="form-control usd_input" id="special_value_{{idNames[0]}}" name="special_value_{{idNames[0]}}" placeholder="Special value" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 2 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[1]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[1]}}" id="laborValue_{{idNames[1]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[1]}}', 'default_value_{{idNames[1]}}', 'special_value_{{idNames[1]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[1]}}" name="default_value_{{idNames[1]}}" placeholder="Default value" value="{{ratesList[0][idNames[1]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control usd_input"  value="{{ur[idNames[1]]}}" id="special_value_{{idNames[1]}}" name="special_value_{{idNames[1]}}" placeholder="Special value" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 3 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[2]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[2]}}" id="laborValue_{{idNames[2]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[2]}}', 'default_value_{{idNames[2]}}', 'special_value_{{idNames[2]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[2]}}" name="default_value_{{idNames[2]}}" placeholder="Default value" value="{{ratesList[0][idNames[2]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control usd_input"  value="{{ur[idNames[2]]}}" id="special_value_{{idNames[2]}}" name="special_value_{{idNames[2]}}" placeholder="Special value" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 4 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[3]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[3]}}" id="laborValue_{{idNames[3]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[3]}}', 'default_value_{{idNames[3]}}', 'special_value_{{idNames[3]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[3]}}" name="default_value_{{idNames[3]}}" placeholder="Default value" value="{{ratesList[0][idNames[3]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control usd_input" id="special_value_{{idNames[3]}}" name="special_value_{{idNames[3]}}" placeholder="Special value" value="{{ur[idNames[3]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 5 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[4]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[4]}}" id="laborValue_{{idNames[4]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[4]}}', 'default_value_{{idNames[4]}}', 'special_value_{{idNames[4]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[4]}}" name="default_value_{{idNames[4]}}" placeholder="Default value" value="{{ratesList[0][idNames[4]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control usd_input" id="special_value_{{idNames[4]}}" name="special_value_{{idNames[4]}}" placeholder="Special value" value="{{ur[idNames[4]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 6 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[5]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[5]}}" id="laborValue_{{idNames[5]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[5]}}', 'default_value_{{idNames[5]}}', 'special_value_{{idNames[5]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[5]}}" name="default_value_{{idNames[5]}}" placeholder="Default value" value="{{ratesList[0][idNames[5]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[5]}}" name="special_value_{{idNames[5]}}" placeholder="Special value" value="{{ur[idNames[5]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 7 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[6]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[6]}}" id="laborValue_{{idNames[6]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[6]}}', 'default_value_{{idNames[6]}}', 'special_value_{{idNames[6]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[6]}}" name="default_value_{{idNames[6]}}" placeholder="Default value" value="{{ratesList[0][idNames[6]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[6]}}" name="special_value_{{idNames[6]}}" placeholder="Special value" value="{{ur[idNames[6]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 8 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[7]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[7]}}" id="laborValue_{{idNames[7]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[7]}}', 'default_value_{{idNames[7]}}', 'special_value_{{idNames[7]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[7]}}" name="default_value_{{idNames[7]}}" placeholder="Default value" value="{{ratesList[0][idNames[7]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[7]}}" name="special_value_{{idNames[7]}}" placeholder="Special value" value="{{ur[idNames[7]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 9 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[8]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[8]}}" id="laborValue_{{idNames[8]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[8]}}', 'default_value_{{idNames[8]}}', 'special_value_{{idNames[8]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[8]}}" name="default_value_{{idNames[8]}}" placeholder="Default value" value="{{ratesList[0][idNames[8]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[8]}}" name="special_value_{{idNames[8]}}" placeholder="Special value" {% if ur[idNames[8]] == 0.0 %} value="" {% else %} value="{{ur[idNames[8]]}}" {% endif %}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 10 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[9]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[9]}}" id="laborValue_{{idNames[9]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[9]}}', 'default_value_{{idNames[9]}}', 'special_value_{{idNames[9]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[9]}}" name="default_value_{{idNames[9]}}" placeholder="Default value" value="{{ratesList[0][idNames[9]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[9]}}" name="special_value_{{idNames[9]}}" placeholder="Special value" value="{{ur[idNames[9]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 11 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[10]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[10]}}" id="laborValue_{{idNames[10]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[10]}}', 'default_value_{{idNames[10]}}', 'special_value_{{idNames[10]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[10]}}" name="default_value_{{idNames[10]}}" placeholder="Default value" value="{{ratesList[0][idNames[10]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[10]}}" name="special_value_{{idNames[10]}}" placeholder="Special value" value="{{ur[idNames[10]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 12 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[11]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[11]}}" id="laborValue_{{idNames[11]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[11]}}', 'default_value_{{idNames[0]}}', 'special_value_{{idNames[11]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[11]}}" name="default_value_{{idNames[11]}}" placeholder="Default value" value="{{ratesList[0][idNames[11]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[11]}}" name="special_value_{{idNames[11]}}" placeholder="Special value" value="{{ur[idNames[11]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 13 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[12]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[12]}}" id="laborValue_{{idNames[12]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[12]}}', 'default_value_{{idNames[12]}}', 'special_value_{{idNames[12]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[12]}}" name="default_value_{{idNames[12]}}" placeholder="Default value" value="{{ratesList[0][idNames[12]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[12]}}" name="special_value_{{idNames[12]}}" placeholder="Special value" value="{{ur[idNames[12]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 14 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[13]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[13]}}" id="laborValue_{{idNames[13]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[13]}}', 'default_value_{{idNames[13]}}', 'special_value_{{idNames[13]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[13]}}" name="default_value_{{idNames[13]}}" placeholder="Default value" value="{{ratesList[0][idNames[13]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[13]}}" name="special_value_{{idNames[13]}}" placeholder="Special value" value="{{ur[idNames[13]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 15 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[14]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[14]}}" id="laborValue_{{idNames[14]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[14]}}', 'default_value_{{idNames[14]}}', 'special_value_{{idNames[14]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[14]}}" name="default_value_{{idNames[14]}}" placeholder="Default value" value="{{ratesList[0][idNames[14]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[14]}}" name="special_value_{{idNames[14]}}" placeholder="Special value" value="{{ur[idNames[14]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 16 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[15]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[15]}}" id="laborValue_{{idNames[15]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[15]}}', 'default_value_{{idNames[15]}}', 'special_value_{{idNames[15]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[15]}}" name="default_value_{{idNames[15]}}" placeholder="Default value" value="{{ratesList[0][idNames[16]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[15]}}" name="special_value_{{idNames[15]}}" placeholder="Special value" value="{{ur[idNames[15]]}}" disabled>
+					</div>
+				</div>
+
+
+			</div>
+
+
+			<!-- ************************ col 2 ****************************************************** -->
+			<div class="col-lg-4 bg bg-light border pt-4">
+				<!------------------------ Row 1 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[16]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[16]}}" id="laborValue_{{idNames[16]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[16]}}', 'default_value_{{idNames[16]}}', 'special_value_{{idNames[16]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[16]}}" name="default_value_{{idNames[16]}}" placeholder="Default value" value="{{ratesList[0][idNames[16]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[16]}}" name="special_value_{{idNames[16]}}" placeholder="Special value" value="{{ur[idNames[16]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 2 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[17]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[17]}}" id="laborValue_{{idNames[17]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[17]}}', 'default_value_{{idNames[17]}}', 'special_value_{{idNames[17]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[17]}}" name="default_value_{{idNames[17]}}" placeholder="Default value" value="{{ratesList[0][idNames[17]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[17]}}" name="special_value_{{idNames[17]}}" placeholder="Special value" value="{{ur[idNames[17]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 3 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[18]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[18]}}" id="laborValue_{{idNames[18]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[18]}}', 'default_value_{{idNames[18]}}', 'special_value_{{idNames[18]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[18]}}" name="default_value_{{idNames[18]}}" placeholder="Default value" value="{{ratesList[0][idNames[18]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[18]}}" name="special_value_{{idNames[18]}}" placeholder="Special value" value="{{ur[idNames[18]]}}"  disabled>
+					</div>
+				</div>
+				<!------------------------ Row 4 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[19]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[19]}}" id="laborValue_{{idNames[19]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[19]}}', 'default_value_{{idNames[19]}}', 'special_value_{{idNames[19]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[19]}}" name="default_value_{{idNames[19]}}" placeholder="Default value" value="{{ratesList[0][idNames[19]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[19]}}" name="special_value_{{idNames[19]}}" placeholder="Special value" value="{{ur[idNames[19]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 5 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[20]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[20]}}" id="laborValue_{{idNames[20]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[20]}}', 'default_value_{{idNames[20]}}', 'special_value_{{idNames[20]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[20]}}" name="default_value_{{idNames[20]}}" placeholder="Default value" value="{{ratesList[0][idNames[20]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[20]}}" name="special_value_{{idNames[20]}}" placeholder="Special value" value="{{ur[idNames[20]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 6 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[21]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[21]}}" id="laborValue_{{idNames[21]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[21]}}', 'default_value_{{idNames[21]}}', 'special_value_{{idNames[21]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[21]}}" name="default_value_{{idNames[21]}}" placeholder="Default value" value="{{ratesList[0][idNames[21]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[21]}}" name="special_value_{{idNames[21]}}" placeholder="Special value" value="{{ur[idNames[21]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 7 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[22]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[22]}}" id="laborValue_{{idNames[22]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[22]}}', 'default_value_{{idNames[22]}}', 'special_value_{{idNames[22]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[22]}}" name="default_value_{{idNames[22]}}" placeholder="Default value" value="{{ratesList[0][idNames[22]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[22]}}" name="special_value_{{idNames[22]}}" placeholder="Special value" value="{{ur[idNames[22]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 8 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[23]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[23]}}" id="laborValue_{{idNames[23]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[23]}}', 'default_value_{{idNames[23]}}', 'special_value_{{idNames[23]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[23]}}" name="default_value_{{idNames[23]}}" placeholder="Default value" value="{{ratesList[0][idNames[23]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[23]}}" name="special_value_{{idNames[23]}}" placeholder="Special value" value="{{ur[idNames[23]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 9 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[24]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[24]}}" id="laborValue_{{idNames[24]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[24]}}', 'default_value_{{idNames[24]}}', 'special_value_{{idNames[24]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[24]}}" name="default_value_{{idNames[24]}}" placeholder="Default value" value="{{ratesList[0][idNames[24]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[24]}}" name="special_value_{{idNames[24]}}" placeholder="Special value" value="{{ur[idNames[24]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 10 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[25]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[25]}}" id="laborValue_{{idNames[25]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[25]}}', 'default_value_{{idNames[25]}}', 'special_value_{{idNames[25]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[25]}}" name="default_value_{{idNames[25]}}" placeholder="Default value" value="{{ratesList[0][idNames[25]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[25]}}" name="special_value_{{idNames[25]}}" placeholder="Special value" value="{{ur[idNames[25]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 11 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[26]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[26]}}" id="laborValue_{{idNames[26]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[26]}}', 'default_value_{{idNames[26]}}', 'special_value_{{idNames[26]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[26]}}" name="default_value_{{idNames[26]}}" placeholder="Default value" value="{{ratesList[0][idNames[26]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[26]}}" name="special_value_{{idNames[26]}}" placeholder="Special value" value="{{ur[idNames[26]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 12 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[27]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[27]}}" id="laborValue_{{idNames[27]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[27]}}', 'default_value_{{idNames[27]}}', 'special_value_{{idNames[27]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[27]}}" name="default_value_{{idNames[27]}}" placeholder="Default value" value="{{ratesList[0][idNames[27]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[27]}}" name="special_value_{{idNames[27]}}" placeholder="Special value" value="{{ur[idNames[27]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 13 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[28]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[28]}}" id="laborValue_{{idNames[28]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[28]}}', 'default_value_{{idNames[28]}}', 'special_value_{{idNames[28]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[28]}}" name="default_value_{{idNames[28]}}" placeholder="Default value" value="{{ratesList[0][idNames[28]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[28]}}" name="special_value_{{idNames[28]}}" placeholder="Special value" value="{{ur[idNames[28]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 14 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[29]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[29]}}" id="laborValue_{{idNames[29]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[29]}}', 'default_value_{{idNames[29]}}', 'special_value_{{idNames[29]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[29]}}" name="default_value_{{idNames[29]}}" placeholder="Default value" value="{{ratesList[0][idNames[29]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[29]}}" name="special_value_{{idNames[29]}}" placeholder="Special value" value="{{ur[idNames[29]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 15 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[30]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[30]}}" id="laborValue_{{idNames[30]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[30]}}', 'default_value_{{idNames[30]}}', 'special_value_{{idNames[30]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[30]}}" name="default_value_{{idNames[30]}}" placeholder="Default value" value="{{ratesList[0][idNames[30]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[30]}}" name="special_value_{{idNames[30]}}" placeholder="Special value" value="{{ur[idNames[30]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 16 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[31]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[31]}}" id="laborValue_{{idNames[31]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[31]}}', 'default_value_{{idNames[31]}}', 'special_value_{{idNames[31]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[31]}}" name="default_value_{{idNames[31]}}" placeholder="Default value" value="{{ratesList[0][idNames[31]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[31]}}" name="special_value_{{idNames[31]}}" placeholder="Special value" value="{{ur[idNames[31]]}}" disabled>
+					</div>
+				</div>
+
+
+			</div>
+
+
+
+
+
+			<!-- ************************ col 3 ****************************************************** -->
+			<div class="col-lg-4 bg bg-light border pt-4">
+				<!------------------------ Row 1 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[32]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[32]}}" id="laborValue_{{idNames[32]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[32]}}', 'default_value_{{idNames[32]}}', 'special_value_{{idNames[32]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[32]}}" name="default_value_{{idNames[32]}}" placeholder="Default value" value="{{ratesList[0][idNames[32]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[32]}}" name="special_value_{{idNames[32]}}" placeholder="Special value" value="{{ur[idNames[32]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 2 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[33]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[33]}}" id="laborValue_{{idNames[33]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[33]}}', 'default_value_{{idNames[33]}}', 'special_value_{{idNames[33]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[33]}}" name="default_value_{{idNames[33]}}" placeholder="Default value" value="{{ratesList[0][idNames[33]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[33]}}" name="special_value_{{idNames[33]}}" placeholder="Special value" value="{{ur[idNames[33]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 3 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[34]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[34]}}" id="laborValue_{{idNames[34]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[34]}}', 'default_value_{{idNames[34]}}', 'special_value_{{idNames[34]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[34]}}" name="default_value_{{idNames[34]}}" placeholder="Default value" value="{{ratesList[0][idNames[34]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[34]}}" name="special_value_{{idNames[34]}}" placeholder="Special value" value="{{ur[idNames[34]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 4 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[35]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[35]}}" id="laborValue_{{idNames[35]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[35]}}', 'default_value_{{idNames[35]}}', 'special_value_{{idNames[35]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[35]}}" name="default_value_{{idNames[35]}}" placeholder="Default value" value="{{ratesList[0][idNames[35]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[35]}}" name="special_value_{{idNames[35]}}" placeholder="Special value" value="{{ur[idNames[35]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 5 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[36]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[36]}}" id="laborValue_{{idNames[36]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[36]}}', 'default_value_{{idNames[36]}}', 'special_value_{{idNames[36]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[36]}}" name="default_value_{{idNames[36]}}" placeholder="Default value" value="{{ratesList[0][idNames[36]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[36]}}" name="special_value_{{idNames[36]}}" placeholder="Special value" value="{{ur[idNames[36]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 6 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[37]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[37]}}" id="laborValue_{{idNames[37]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[37]}}', 'default_value_{{idNames[37]}}', 'special_value_{{idNames[37]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[37]}}" name="default_value_{{idNames[37]}}" placeholder="Default value" value="{{ratesList[0][idNames[37]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[37]}}" name="special_value_{{idNames[37]}}" placeholder="Special value" value="{{ur[idNames[37]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 7 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[38]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[38]}}" id="laborValue_{{idNames[38]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[38]}}', 'default_value_{{idNames[38]}}', 'special_value_{{idNames[38]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[38]}}" name="default_value_{{idNames[38]}}" placeholder="Default value" value="{{ratesList[0][idNames[38]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[38]}}" name="special_value_{{idNames[38]}}" placeholder="Special value" value="{{ur[idNames[38]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 8 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[39]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[39]}}" id="laborValue_{{idNames[39]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[39]}}', 'default_value_{{idNames[39]}}', 'special_value_{{idNames[39]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[39]}}" name="default_value_{{idNames[39]}}" placeholder="Default value" value="{{ratesList[0][idNames[39]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[39]}}" name="special_value_{{idNames[39]}}" placeholder="Special value" value="{{ur[idNames[39]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 9 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[40]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[40]}}" id="laborValue_{{idNames[40]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[40]}}', 'default_value_{{idNames[40]}}', 'special_value_{{idNames[40]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[40]}}" name="default_value_{{idNames[40]}}" placeholder="Default value" value="{{ratesList[0][idNames[40]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[40]}}" name="special_value_{{idNames[40]}}" placeholder="Special value" value="{{ur[idNames[40]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 10 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[41]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[41]}}" id="laborValue_{{idNames[41]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[41]}}', 'default_value_{{idNames[41]}}', 'special_value_{{idNames[41]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[41]}}" name="default_value_{{idNames[41]}}" placeholder="Default value" value="{{ratesList[0][idNames[41]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[41]}}" name="special_value_{{idNames[41]}}" placeholder="Special value" value="{{ur[idNames[41]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 11 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[42]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[42]}}" id="laborValue_{{idNames[42]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[42]}}', 'default_value_{{idNames[42]}}', 'special_value_{{idNames[42]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[42]}}" name="default_value_{{idNames[42]}}" placeholder="Default value" value="{{ratesList[0][idNames[42]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[42]}}" name="special_value_{{idNames[42]}}" placeholder="Special value" value="{{ur[idNames[42]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 12 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[43]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[43]}}" id="laborValue_{{idNames[43]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[43]}}', 'default_value_{{idNames[43]}}', 'special_value_{{idNames[43]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[43]}}" name="default_value_{{idNames[43]}}" placeholder="Default value" value="{{ratesList[0][idNames[43]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[43]}}" name="special_value_{{idNames[43]}}" placeholder="Special value" value="{{ur[idNames[43]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 13 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[44]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[44]}}" id="laborValue_{{idNames[44]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[44]}}', 'default_value_{{idNames[44]}}', 'special_value_{{idNames[44]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[44]}}" name="default_value_{{idNames[44]}}" placeholder="Default value" value="{{ratesList[0][idNames[44]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[44]}}" name="special_value_{{idNames[44]}}" placeholder="Special value" value="{{ur[idNames[44]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 14 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[45]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[45]}}" id="laborValue_{{idNames[45]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[45]}}', 'default_value_{{idNames[45]}}', 'special_value_{{idNames[45]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[45]}}" name="default_value_{{idNames[45]}}" placeholder="Default value" value="{{ratesList[0][idNames[45]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[45]}}" name="special_value_{{idNames[45]}}" placeholder="Special value" value="{{ur[idNames[45]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 15 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[46]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[46]}}" id="laborValue_{{idNames[46]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[46]}}', 'default_value_{{idNames[46]}}', 'special_value_{{idNames[46]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[46]}}" name="default_value_{{idNames[46]}}" placeholder="Default value" value="{{ratesList[0][idNames[46]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[46]}}" name="special_value_{{idNames[46]}}" placeholder="Special value" value="{{ur[idNames[46]]}}" disabled>
+					</div>
+				</div>
+				<!------------------------ Row 16 ----------------------------->				
+				<div class="row pb-3">	
+					<div class="col-lg-12">
+						<h6 class="font-weight-bold text-decoration-underline"><u>{{labels[47]}}</u></h6>				
+					</div>			
+					<div class="col-lg-4">
+						<select name="laborValue_{{idNames[47]}}" id="laborValue_{{idNames[47]}}" class="custom-select" onchange="check_value_type('laborValue_{{idNames[47]}}', 'default_value_{{idNames[47]}}', 'special_value_{{idNames[47]}}' )">
+							<option value="" Selected>Select Value</option>
+							<option value="Default Value">Default Value</option>
+							<option value="Special Value">Special Value</option>
+						</select>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="default_value_{{idNames[47]}}" name="default_value_{{idNames[47]}}" placeholder="Default value" value="{{ratesList[0][idNames[47]]}}" readonly>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" id="special_value_{{idNames[47]}}" name="special_value_{{idNames[47]}}" placeholder="Special value" value="{{ur[idNames[47]]}}" disabled>
+					</div>
+				</div>
+
+
+
+
+
+			</div>
+
+
+
+
+
+
+
+
+
+			</div>
+			<div class="col-lg-4 pt-2">
+				<button type="" value="Update" class="d-inline btn btn-info btn-sm">Update</button>
+			</div>
+
+			{% endfor %}
+			</form>
+
+
+				
+
+
+		</div>
+	</div>
+</section>
+
+<script>
+function goBack() {
+  window.history.back();
+  location.reload(true);
+  }
+</script> 
+
+<script type="text/javascript">
+	function check_value_type(var1, var2, var3){
+		/*var laborValue = laborValue+{{idNames[0]}}
+		var special_value = special_value+{{idNames[0]}}*/
+		var valueType = document.getElementById(var1).value
+		if(valueType == "Special Value"){
+			document.getElementById(var3).disabled = false;
+			document.getElementById(var3).required = true;
+		}
+		else{
+			document.getElementById(var3).disabled = true;	
+		}
+	}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" ></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+  	$('.usd_input').mask('00000.00', { reverse: true });
+});
+</script>
+
+{% endblock %}
